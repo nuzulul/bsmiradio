@@ -2,7 +2,7 @@ var app = require("express")();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
 
-
+const port = process.env.PORT || 3000;
 
 var express = require('express');
 app.use(express.static(__dirname));
@@ -17,9 +17,6 @@ app.get('/cron', function (req, res) {
     res.send('ok');
     console.log('request cron');
 });
-
-
-
 
 const users = [];
 
@@ -151,7 +148,8 @@ io.on("connection", function(socket) {
 
   socket.on("availability", function(message,sfrequency) {
    //socket.join(sfrequency);
-   io.to(sfrequency).emit("availability", message);
+   //io.to(sfrequency).emit("availability", message);
+   socket.to(sfrequency).emit("availability", message);
    console.log(sfrequency,message)
 
   });
@@ -167,6 +165,11 @@ io.on("connection", function(socket) {
    var message = getUsersInRoom(sfrequency)
    socket.emit("scanrf", message);
    console.log(sfrequency, message)
+  });
+
+  socket.on("ping", function(message) {
+   socket.emit("ping", message);
+   console.log(message)
   });
 
   socket.on("audioMessage", function(msg,frequency,echo,mysocket) {
@@ -188,6 +191,6 @@ process.on('uncaughtException', err => {
   process.exit(1) //mandatory (as per the Node.js docs)
 })
 
-http.listen(3000, function() {
-  console.log("listening to port:3000");
+http.listen(port, function() {
+  console.log("listening to port: "+port);
 });

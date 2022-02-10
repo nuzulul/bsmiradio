@@ -374,7 +374,7 @@ function readyapp()
           error: function(jqXHR, textStatus, errorThrown) 
             {
               console.log(jqXHR.responseText);
-              $('#warning').text("Maaf anda tidak memiliki kunci akses. Buka aplikasi dari BSMI Mobile.")       
+              $('#warning').text("Kunci akses kedaluwarsa buka aplikasi dari BSMI Mobile.")       
               //document.getElementById("overlay").style.display = "none";
               //walkietalkie();
             },
@@ -389,11 +389,15 @@ function readyapp()
       });   
 }
 
+currentfrequency = "10";
+
 var socket = io();
-console.log(socket)
+
+//console.log(socket);
 
 socket.on("connect", () => {
-    console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    //console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    console.log('socket : connected');
     var socketid = socket.id;
     window.socketid = socketid;
     var username = socket.id;
@@ -404,13 +408,17 @@ socket.on("connect", () => {
         console.log(error);
       }
     });
+
+    $('#iswtavailable').text("Ready");
 }); 
 
 socket.on("disconnect", () => {
-
-    $('#warning').text("Koneksi terputus");
-    document.getElementById("overlay").style.display = "block"; 
-
+    $('.usercount').text("-");
+    $('.userjoin').text("-");
+    $('#iswtavailable').text("Disconnected");
+    console.log('socket : disconnected');
+    //$('#warning').text("Koneksi terputus");
+    //document.getElementById("overlay").style.display = "block"; 
 });
 
 socket.on('user', function (usercount) {
@@ -436,13 +444,37 @@ socket.on('scanrf', function (data) {
   //console.log(jumlah);
 });
 
+socket.on('availability', function (message) {
+        if (message=="started") {
+            document.getElementById("iswtavailable").innerHTML = "Busy Now!";
+            document.getElementsByClassName("left")[0].style.backgroundColor = "red";
+            document.getElementsByClassName("right")[0].style.backgroundColor = "red";               
+        } else {
+            document.getElementById("iswtavailable").innerHTML = "Ready";
+            document.getElementsByClassName("left")[0].style.backgroundColor = "white";
+            document.getElementsByClassName("right")[0].style.backgroundColor = "white";
+            
+        }
+});
+
+socket.on('pttblock', function (message) {
+    if (message=="started") {
+      document.getElementById("pttblock").style.display = "block";
+    }
+    else
+    {
+      document.getElementById("pttblock").style.display = "none";
+    }
+});
+
+
+
 function walkietalkie()
 {
 
-    lcdfrequency(currentfrequency);
+    //lcdfrequency(currentfrequency);
     resetfrequency();
     // https://medium.com/@saurssaurav33/how-to-make-a-browser-walkie-talkie-using-node-js-and-socket-io-ae024bb9b378
- 
 
     socket.on('audioMessage', function (audioChunks,myecho,mysocket) {
         try {
@@ -491,60 +523,37 @@ function walkietalkie()
         }
         catch(err) {
         }
-    });
+    }); 
 
-    socket.on('availability', function (message) {
-           if (message=="started") {
-               document.getElementById("iswtavailable").innerHTML = "Busy Now!";
-               document.getElementsByClassName("left")[0].style.backgroundColor = "red";
-               document.getElementsByClassName("right")[0].style.backgroundColor = "red";               
-            } else {
-               document.getElementById("iswtavailable").innerHTML = "Ready";
-               document.getElementsByClassName("left")[0].style.backgroundColor = "white";
-               document.getElementsByClassName("right")[0].style.backgroundColor = "white";
-               
+  navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(stream => {
+        const mediaRecorder = new MediaRecorder(stream);
+        var audioChunks = [];
+        var mysocket = socketid;
+        var myecho = $('#echo').text();
+        $('.play-button').on('mousedown touchstart', function (e) {
+                socket.emit('pttblock',"started",currentfrequency);
+                socket.emit('availability',"started",currentfrequency);
+                mediaRecorder.start();
+                $(this).toggleClass("paused");
+        }).bind('mouseup mouseleave touchend', function () {
+            if (mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                $(this).toggleClass("paused");
+                socket.emit('availability',"stopped",currentfrequency);
+                socket.emit('pttblock',"stopped",currentfrequency);
             }
-    });
-
-    socket.on('pttblock', function (message) {
-        if (message=="started") {
-          document.getElementById("pttblock").style.display = "block";
-        }
-        else
-        {
-          document.getElementById("pttblock").style.display = "none";
-        }
-    });
-    
-    navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
-            const mediaRecorder = new MediaRecorder(stream);
-            var audioChunks = [];
-            var mysocket = socketid;
-            var myecho = $('#echo').text();
-            $('.play-button').on('mousedown touchstart', function (e) {
-                    socket.emit('pttblock',"started",currentfrequency);
-                    socket.emit('availability',"started",currentfrequency);
-                    mediaRecorder.start();
-                    $(this).toggleClass("paused");
-            }).bind('mouseup mouseleave touchend', function () {
-                if (mediaRecorder.state !== 'inactive') {
-                    mediaRecorder.stop();
-                    $(this).toggleClass("paused");
-                    socket.emit('availability',"stopped",currentfrequency);
-                    socket.emit('pttblock',"stopped",currentfrequency);
-                }
-            });
-            mediaRecorder.addEventListener("dataavailable", event => {
-                audioChunks.push(event.data);
-
-            });
-            mediaRecorder.addEventListener("stop", () => {
-                //socket.broadcast.emit('audioMessage', audioChunks);
-                socket.emit('audioMessage', audioChunks,currentfrequency,myecho,mysocket);
-                audioChunks = [];
-            });
         });
+        mediaRecorder.addEventListener("dataavailable", event => {
+            audioChunks.push(event.data);
+
+        });
+        mediaRecorder.addEventListener("stop", () => {
+            //socket.broadcast.emit('audioMessage', audioChunks);
+            socket.emit('audioMessage', audioChunks,currentfrequency,myecho,mysocket);
+            audioChunks = [];
+        });
+    });
 
 
 }
@@ -644,8 +653,17 @@ function updateOnlineStatus(event) {
   var condition = navigator.onLine ? "online" : "offline";
   if (condition == 'offline')
   {
-    $('#warning').text("Offline! Koneksi terputus");
-    document.getElementById("overlay").style.display = "block"; 
+    //$('#warning').text("Offline! Koneksi terputus");
+    //document.getElementById("overlay").style.display = "block"; 
+    $('#iswtavailable').text("Offline");
+    
+  }
+  if (condition == 'online')
+  {
+    //$('#warning').text("Offline! Koneksi terputus");
+    //document.getElementById("overlay").style.display = "block"; 
+    $('#iswtavailable').text("Online");
+    
   }
 }
 
