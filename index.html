@@ -302,10 +302,10 @@ function resetfrequency()
 <body>
 <div class="main">
 <div style="position:relative;top:0px;left: 50%;transform: translateX(-50%);width:360px;">
-  <div style="height:0px;position:relative;top:235px;left:190px;"><div style="width:75px;height:20px;"><a style="font-size:10px;">Total online : <span class="usercount"></span></a></div></div>
+  <div style="height:0px;position:relative;top:235px;left:190px;"><div style="width:100px;height:20px;"><a style="font-size:10px;">Total online : <span class="usercount"></span></a></div></div>
   <div style="height:0px;position:relative;top:250px;left:60px;"><div style="width:170px;height:40px;"><span id="lcdf" style="color:red; font-size:30px;"></span><span id="mhz" style="color:red; font-size:20px;"> MHZ</span></div></div>
   <div style="height:0px;position:relative;top:280px;left:60px;"><div style="width:170px;height:20px;"><a style="font-size:10px;">Join frequency : <span class="userjoin"></span></a></div></div>
-  <div style="height:0px;position:relative;top:275px;left:235px;"><div style="width:100px;height:20px;font-size:12px;"><span id="iswtavailable">Ready</span></div></div>
+  <div style="height:0px;position:relative;top:275px;left:225px;"><div style="width:100px;height:20px;font-size:12px;"><span id="iswtavailable">Ready</span></div></div>
   
   <div style="height:0px;position:relative;top:320px;left:0px;"><div style="width:360px;height:20px;"><center><button onclick="rfslidderbutton();" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">SET</button><button onclick="resetfrequency();" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">RESET</button><button onclick="scanrfbutton();" id="scanrf" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">SCAN</button><button onclick="echobutton();" id="echo" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">ECHO OFF</button><a href="https://support.google.com/chrome/answer/2693767?hl=id&co=GENIE.Platform%3DAndroid" target="_blank"><button onclick="" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">HELP</button></a></center></div></div>
 
@@ -415,7 +415,7 @@ socket.on("connect", () => {
 socket.on("disconnect", () => {
     $('.usercount').text("-");
     $('.userjoin').text("-");
-    $('#iswtavailable').text("Disconnected");
+    $('#iswtavailable').text("Reconnecting...");
     console.log('socket : disconnected');
     //$('#warning').text("Koneksi terputus");
     //document.getElementById("overlay").style.display = "block"; 
