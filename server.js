@@ -26,7 +26,6 @@ app.get('/fetch', function (req, res) {
     const myfetch = spawnSync("git", ["fetch","--all"]);
     myfetch.stdout.on("data", data => {
       console.log(`stdout1: ${data}`);               
-      });
     });
 
     const myreset = spawnSync("git", ["reset","--hard","origin/main"]);
