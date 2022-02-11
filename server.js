@@ -27,6 +27,11 @@ app.get('/cron', function (req, res) {
     console.log('request cron');
 });
 
+app.get('/restart', function (req, res) {    
+    res.send('ok');
+    console.log('restart');
+});
+
 app.post('/fetch', function (req, res) {
     console.log('request fetch');
     
