@@ -5,9 +5,11 @@ const { spawnSync } = require('child_process');
 
 const port = process.env.PORT || 3000;
 
-
 var express = require('express');
+
 app.use(express.static(__dirname));
+//app.use(express.json());
+//app.use(express.urlencoded({ extended: true }));
 
 var Usercounter = 0;
 
@@ -25,7 +27,7 @@ app.get('/cron', function (req, res) {
     console.log('request cron');
 });
 
-app.get('/fetch', function (req, res) {
+app.post('/fetch', function (req, res) {
     console.log('request fetch');
     
     const myfetch = spawnSync("git", ["fetch","--all"]);
@@ -34,6 +36,10 @@ app.get('/fetch', function (req, res) {
           
     console.log('request fetch end');
     res.send('fetch ok');
+});
+
+app.get('/fetch', function (req, res) {
+  res.send('ok');
 });
 
 const users = [];
