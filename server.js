@@ -11,7 +11,12 @@ app.use(express.static(__dirname));
 
 var Usercounter = 0;
 
-app.get("/", function(req, res) {
+app.get('/', function (req, res) {
+    res.send('ok');
+    console.log('request default');
+});
+
+app.get("/radio", function(req, res) {
   res.sendFile(__dirname + "/server.html");
 });
 
