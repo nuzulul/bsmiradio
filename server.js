@@ -10,7 +10,7 @@ app.use(express.static(__dirname));
 var Usercounter = 0;
 
 app.get("/", function(req, res) {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/server.html");
 });
 
 app.get('/cron', function (req, res) {
