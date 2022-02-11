@@ -1,7 +1,7 @@
 var app = require("express")();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
-const { spawn} = require('child_process');
+const { spawnSync } = require('child_process');
 
 const port = process.env.PORT || 3000;
 
@@ -22,18 +22,16 @@ app.get('/cron', function (req, res) {
 
 app.get('/fetch', function (req, res) {
     console.log('request fetch');
-    const myfetch = spawn("git", ["fetch","--all"]);
+    
+    const myfetch = spawnSync("git", ["fetch","--all"]);
     myfetch.stdout.on("data", data => {
-      console.log(`stdout1: ${data}`);
-      const myreset = spawn("git", ["reset","--hard","origin/main"]);
-      myreset.stdout.on("data", data => {
-        console.log(`stdout2: ${data}`);               
+      console.log(`stdout1: ${data}`);               
       });
     });
 
-    const myreset = spawn("git", ["reset","--hard","origin/main"]);
+    const myreset = spawnSync("git", ["reset","--hard","origin/main"]);
     myreset.stdout.on("data", data => {
-      console.log(`stdout3: ${data}`);
+      console.log(`stdout2: ${data}`);
     }); 
           
     console.log('request fetch end');
