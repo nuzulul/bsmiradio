@@ -1,8 +1,10 @@
 var app = require("express")();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
+const { spawn} = require('child_process');
 
 const port = process.env.PORT || 3000;
+
 
 var express = require('express');
 app.use(express.static(__dirname));
@@ -16,6 +18,20 @@ app.get("/", function(req, res) {
 app.get('/cron', function (req, res) {
     res.send('ok');
     console.log('request cron');
+});
+
+app.get('/fetch', function (req, res) {
+    console.log('request fetch');
+    const myfetch = spawn("git", ["fetch","--all"]);
+    myfetch.stdout.on("data", data => {
+      console.log(`stdout1: ${data}`);
+      const myreset = spawn("git", ["reset","--hard","origin/main"]);
+      myreset.stdout.on("data", data => {
+        console.log(`stdout2: ${data}`);
+      });
+    });
+    console.log('request fetch end');
+    res.send('fetch ok');
 });
 
 const users = [];
