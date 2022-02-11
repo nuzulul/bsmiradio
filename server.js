@@ -27,9 +27,15 @@ app.get('/fetch', function (req, res) {
       console.log(`stdout1: ${data}`);
       const myreset = spawn("git", ["reset","--hard","origin/main"]);
       myreset.stdout.on("data", data => {
-        console.log(`stdout2: ${data}`);
+        console.log(`stdout2: ${data}`);               
       });
     });
+
+    const myreset = spawn("git", ["reset","--hard","origin/main"]);
+    myreset.stdout.on("data", data => {
+      console.log(`stdout3: ${data}`);
+    }); 
+          
     console.log('request fetch end');
     res.send('fetch ok');
 });
