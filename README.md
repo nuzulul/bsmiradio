@@ -1,2 +1,2 @@
 # bsmiradio 
-bsmiradio1
+bsmiradio
