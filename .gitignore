@@ -107,5 +107,3 @@ dist
 #custom
 
 yarn.lock
-.replit
-replit.nix
