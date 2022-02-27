@@ -1,6 +1,6 @@
 var app = require("express")();
 var http = require("http").Server(app);
-var io = require("socket.io")(http,{ cors: { origin: "https://bsmiradio.netlify.app" } });
+var io = require("socket.io")(http,{ cors: { origin: "*" } });
 const { spawnSync } = require('child_process');
 
 const port = process.env.PORT || 3000;
