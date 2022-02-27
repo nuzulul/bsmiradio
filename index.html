@@ -741,6 +741,23 @@ function stringtohash(data){
   return hash;
 }
 
+function disableScroll() {
+    // Get the current page scroll position
+    scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+  
+        // if any scroll is attempted, set this to the previous value
+        window.onscroll = function() {
+            window.scrollTo(scrollLeft, scrollTop);
+        };
+}
+  
+function enableScroll() {
+    window.onscroll = function() {};
+}
+
+disableScroll();
+
 //let today = new Date().toISOString().slice(0, 10);
 //console.log(today)
 //console.log(stringtohash(today));
