@@ -175,10 +175,10 @@ io.on("connection", function(socket) {
     callback();
   });
 
-  socket.on("availability", function(message,sfrequency) {
+  socket.on("availability", function(message,sfrequency,username) {
    //socket.join(sfrequency);
    //io.to(sfrequency).emit("availability", message);
-   socket.to(sfrequency).emit("availability", message);
+   socket.to(sfrequency).emit("availability", message,username);
    console.log(sfrequency,message)
 
   });
@@ -201,12 +201,12 @@ io.on("connection", function(socket) {
    console.log(message)
   });
 
-  socket.on("audioMessage", function(msg,frequency,echo,mysocket) {
+  socket.on("audioMessage", function(msg,frequency,echo,mysocket,username) {
    if (isNaN(frequency) || frequency < 10 || frequency > 99) {
    console.log("Client try something new.")
   } else {
    //socket.join(frequency);
-   io.to(frequency).emit("audioMessage", msg,echo,mysocket);
+   io.to(frequency).emit("audioMessage", msg,echo,mysocket,username);
    console.log("Sended to",frequency)
   }
 
