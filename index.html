@@ -978,13 +978,14 @@ function startbackgroundmode(){
 					cordova.plugins.backgroundMode.excludeFromTaskList();
           cordova.plugins.backgroundMode.on('activate', function() {
              cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
+             cordova.plugins.backgroundMode.configure({
+                  title: "BSMI Radio",
+                  text: "BSMI Radio on broadcasting ...",
+                  resume: false
+              });	
           });
           cordova.plugins.backgroundMode.unlock();				
-					cordova.plugins.backgroundMode.configure({
-							title: "BSMI Radio",
-							text: "BSMI Radio on broadcasting ...",
-							resume: false
-					});	
+
 					//cordova.plugins.backgroundMode.setDefaults({ silent: true });
 				}catch(err){}
 }	
