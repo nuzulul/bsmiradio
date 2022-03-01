@@ -19,7 +19,7 @@ app.get('/', function (req, res) {
 });
 
 app.get("/radio", function(req, res) {
-  res.sendFile(__dirname + "/server.html");
+  res.sendFile(__dirname + "/index.html");
 });
 
 app.get('/cron', function (req, res) {
