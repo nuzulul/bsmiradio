@@ -937,7 +937,7 @@ function cekandroid()
       
       if (platform == "android")
       {
-          startbackgroundmode();
+          
           
           var permissions = window.cordova.plugins.permissions;
           var list = [
@@ -959,7 +959,7 @@ function cekandroid()
               permissions.requestPermissions(
                 list,
                 function(status) {
-                  if( !status.hasPermission ) {error();}else{walkietalkie();}                 
+                  if( !status.hasPermission ) {error();}else{walkietalkie();startbackgroundmode();}                 
                 },
                 error);
             }
