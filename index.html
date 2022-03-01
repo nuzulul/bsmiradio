@@ -334,7 +334,7 @@ e.preventDefault();
 }, false);
 
 $(document).ready(function(){
-  document.getElementById("overlay").onclick = function() {off()};
+  //document.getElementById("overlay").onclick = function() {off()};
 });
 
 function launchFullScreen(element) {
@@ -422,6 +422,9 @@ socket.on("connect", () => {
     });
 
     $('#iswtavailable').text("Ready");
+    
+    document.getElementById("overlay").onclick = function() {off()};
+    
 }); 
 
 socket.on("disconnect", () => {
