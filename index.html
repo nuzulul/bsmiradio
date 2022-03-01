@@ -808,7 +808,7 @@ function cekperizinan()
             permissions.READ_EXTERNAL_STORAGE
           ];
 
-          permissions.hasPermission(list, callback, null);
+          permissions.checkPermission(list, success, null);
 
           function error() {
             console.warn('Izin mikrofon,camera, dan penyimpanan dibutuhkan');
