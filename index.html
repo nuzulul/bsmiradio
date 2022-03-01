@@ -827,8 +827,7 @@ function cekperizinan()
               permissions.requestPermissions(
                 list,
                 function(status) {
-                  if( !status.hasPermission ) error();
-                  walkietalkie();
+                  if( !status.hasPermission ) {error();}else{walkietalkie();}                 
                 },
                 error);
             }
