@@ -800,7 +800,7 @@ function cekperizinan()
       
       if (platform == "android")
       {
-          var permissions = cordova.plugins.permissions;
+          var permissions = window.cordova.plugins.permissions;
           var list = [
             permissions.CAMERA,
             permissions.WRITE_EXTERNAL_STORAGE,
