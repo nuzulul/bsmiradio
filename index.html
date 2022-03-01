@@ -349,8 +349,10 @@ function launchFullScreen(element) {
 
 function off() {
   //launchFullScreen(document.documentElement);
-  readyapp();
   cekperizinan();
+  
+  readyapp();
+  
 }
 
 
@@ -547,6 +549,8 @@ function walkietalkie()
         $('.play-button').on('mousedown touchstart', function (e) {
                 //$(this).toggleClass("paused");
                 $('#iswtavailable').text("Broadcast ...");
+                document.getElementsByClassName("left")[0].style.backgroundColor = "red";
+                document.getElementsByClassName("right")[0].style.backgroundColor = "red"; 
                 socket.emit('pttblock',"started",currentfrequency);
                 socket.emit('availability',"started",currentfrequency,username);
                 mediaRecorder.start();
@@ -556,6 +560,8 @@ function walkietalkie()
                 mediaRecorder.stop();
                 //$(this).toggleClass("paused");
                 $('#iswtavailable').text("Ready");
+                document.getElementsByClassName("left")[0].style.backgroundColor = "white";
+                document.getElementsByClassName("right")[0].style.backgroundColor = "white";
                 socket.emit('availability',"stopped",currentfrequency);
                 socket.emit('pttblock',"stopped",currentfrequency);
                 
@@ -812,8 +818,7 @@ function cekperizinan()
           permissions.checkPermission(list, success, null);
 
           function error() {
-            console.warn('Izin mikrofon,camera, dan penyimpanan dibutuhkan');
-            walkietalkie();
+            console.warn('Izin mikrofon, camera, dan penyimpanan dibutuhkan');
           }
 
           function success( status ) {
@@ -827,8 +832,7 @@ function cekperizinan()
                 },
                 error);
             }
-          }
-          walkietalkie();      
+          }     
       }
 }
 
