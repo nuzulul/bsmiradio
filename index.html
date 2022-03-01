@@ -822,6 +822,7 @@ function cekperizinan()
                 list,
                 function(status) {
                   if( !status.hasPermission ) error();
+                  walkietalkie();
                 },
                 error);
             }
