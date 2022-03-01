@@ -572,6 +572,8 @@ function walkietalkie()
     });
 
     myusername();
+    
+    cekperizinan();
 }
 
 function joinfrequency(data)
@@ -788,6 +790,41 @@ function myusername(force = false)
     {
       window.username = istorage.getItem("username");
     }
+}
+
+function cekperizinan()
+{
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const platform = urlParams.get('platform');
+      
+      if (platform == "android")
+      {
+          var list = [
+            permissions.CAMERA,
+            permissions.WRITE_EXTERNAL_STORAGE,
+            permissions.RECORD_AUDIO,
+            permissions.READ_EXTERNAL_STORAGE
+          ];
+
+          permissions.hasPermission(list, callback, null);
+
+          function error() {
+            console.warn('Izin mikrofon,camera, dan penyimpanan dibutuhkan');
+          }
+
+          function success( status ) {
+            if( !status.hasPermission ) {
+            
+              permissions.requestPermissions(
+                list,
+                function(status) {
+                  if( !status.hasPermission ) error();
+                },
+                error);
+            }
+          }      
+      }
 }
 
 //let today = new Date().toISOString().slice(0, 10);
