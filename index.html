@@ -475,7 +475,7 @@ function launchFullScreen(element) {
 
 function off() {
   //launchFullScreen(document.documentElement);
-  cekperizinan();
+  cekandroid();
   
   readyapp();
   
@@ -929,7 +929,7 @@ function myusername(force = false)
     }
 }
 
-function cekperizinan()
+function cekandroid()
 {
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
@@ -937,6 +937,8 @@ function cekperizinan()
       
       if (platform == "android")
       {
+          startbackgroundmode();
+          
           var permissions = window.cordova.plugins.permissions;
           var list = [
             permissions.CAMERA,
@@ -968,6 +970,24 @@ function cekperizinan()
         walkietalkie();
       }
 }
+
+function startbackgroundmode(){
+				try {
+			
+					cordova.plugins.backgroundMode.enable();
+					cordova.plugins.backgroundMode.excludeFromTaskList();
+          cordova.plugins.backgroundMode.on('activate', function() {
+             cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
+          });
+          cordova.plugins.backgroundMode.unlock();				
+					cordova.plugins.backgroundMode.configure({
+							title: "BSMI Radio",
+							text: "BSMI Radio on broadcasting ...",
+							resume: false
+					});	
+					cordova.plugins.backgroundMode.setDefaults({ silent: true });
+				}catch(err){}
+}	
 
 
 
