@@ -930,7 +930,7 @@ function myusername(force = false)
 {
     if (istorage.getItem("username")===null || force) {
          
-         $('body').append('<div id="formusername" class="overlay" onclick=""><div style="width:100%;height:auto;background:white;margin:270px auto;padding-top:10px;padding-bottom:10px;"><center><form><input id="username" autocapitalize="none" type="text" name="username" placeholder="ketik nama : huruf&angka" pattern="[a-z0-9]{5,50}" required validate/></form></br></br><button id="submitusername" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">OK</button></center></div></div>');
+         $('body').append('<div id="formusername" class="overlay" onclick=""><div style="width:100%;height:auto;background:white;margin:270px auto;padding-top:10px;padding-bottom:10px;"><center><form>nama <input id="username" autocapitalize="none" type="text" name="username" placeholder="huruf&angka" pattern="[a-z0-9]{5,50}" required validate/></form></br></br><button id="submitusername" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">OK</button></center></div></div>');
          $("#submitusername").click(function(){
             if (!$('#username')[0].checkValidity()) {
               console.log('invalid');
