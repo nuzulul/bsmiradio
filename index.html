@@ -677,13 +677,14 @@ function walkietalkie()
         var audioChunks = [];
         var mysocket = socketid;
         var myecho = $('#echo').text();
+        var myuser = username+","+kota+","+provinsi;
         $('.play-button').on('mousedown touchstart', function (e) {
                 $(this).toggleClass("paused");
                 $('#iswtavailable').text("Broadcast ...");
                 document.getElementsByClassName("left")[0].style.backgroundColor = "red";
                 document.getElementsByClassName("right")[0].style.backgroundColor = "red"; 
                 socket.emit('pttblock',"started",currentfrequency);
-                socket.emit('availability',"started",currentfrequency,username);
+                socket.emit('availability',"started",currentfrequency,myuser);
                 mediaRecorder.start();
 
         }).bind('mouseup mouseleave touchend', function () {
@@ -706,7 +707,7 @@ function walkietalkie()
         });
         mediaRecorder.addEventListener("stop", () => {
             //socket.broadcast.emit('audioMessage', audioChunks);
-            socket.emit('audioMessage', audioChunks,currentfrequency,myecho,mysocket,username);
+            socket.emit('audioMessage', audioChunks,currentfrequency,myecho,mysocket,myuser);
             audioChunks = [];
         });
     });
@@ -930,15 +931,21 @@ function myusername(force = false)
 {
     if (istorage.getItem("username")===null || force) {
          
-         $('body').append('<div id="formusername" class="overlay" onclick=""><div style="width:100%;height:auto;background:white;margin:270px auto;padding-top:10px;padding-bottom:10px;"><center><form>nama <input id="username" autocapitalize="none" type="text" name="username" placeholder="huruf&angka" pattern="[a-z0-9]{5,50}" required validate/></form></br></br><button id="submitusername" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">OK</button></center></div></div>');
+         $('body').append('<div id="formusername" class="overlay" onclick=""><div style="width:100%;height:auto;background:white;margin:270px auto;padding-top:10px;padding-bottom:10px;"><center><form id="formmyusername">nama <input id="username" autocapitalize="none" type="text" name="username" placeholder="huruf&angka" pattern="[a-z0-9]{5,50}" required validate/></br>provinsi <input id="provinsi" autocapitalize="none" type="text" name="provinsi" placeholder="huruf" pattern="[a-z]{3,50}" required validate/></br>kota <input id="kota" autocapitalize="none" type="text" name="kota" placeholder="huruf" pattern="[a-z]{3,50}" required validate/></form></br></br><button id="submitusername" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">SIMPAN</button></center></div></div>');
          $("#submitusername").click(function(){
-            if (!$('#username')[0].checkValidity()) {
+            if (!$('#formmyusername')[0].checkValidity()) {
               console.log('invalid');
               return;
             }
             var username = $('#username').val();
+            var provinsi = $('#provinsi').val();
+            var kota = $('#kota').val();
             istorage.setItem("username",username);
+            istorage.setItem("provinsi",provinsi);
+            istorage.setItem("kota",kota);
             window.username = username;
+            window.provinsi = provinsi;
+            window.kota = kota;
             //document.getElementById("formusername").style.display = "none";
             $('#formusername').remove();
          }); 
@@ -946,6 +953,8 @@ function myusername(force = false)
     else
     {
       window.username = istorage.getItem("username");
+      window.provinsi = istorage.getItem("provinsi");
+      window.kota = istorage.getItem("kota");
     }
 }
 
