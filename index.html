@@ -609,6 +609,8 @@ socket.on('availability', function (message,user) {
             document.getElementById("iswtavailable").innerHTML = "Busy...";
             document.getElementsByClassName("left")[0].style.backgroundColor = "red";
             document.getElementsByClassName("right")[0].style.backgroundColor = "red";               
+                  const pttaudio = new Audio("ptt.mp3");
+                  pttaudio.play();
         } else {
             document.getElementById("iswtavailable").innerHTML = "Ready";
             document.getElementsByClassName("left")[0].style.backgroundColor = "white";
