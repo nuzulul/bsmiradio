@@ -1091,10 +1091,10 @@ function startbackgroundmode(){
 					cordova.plugins.backgroundMode.enable();				
           cordova.plugins.backgroundMode.on('activate', function() {
              cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
-              //cordova.plugins.backgroundMode.overrideBackButton();
               //cordova.plugins.backgroundMode.unlock();
               //cordova.plugins.backgroundMode.excludeFromTaskList();
           });
+          cordova.plugins.backgroundMode.overrideBackButton();
           				
 
 					//cordova.plugins.backgroundMode.setDefaults({ silent: true });
