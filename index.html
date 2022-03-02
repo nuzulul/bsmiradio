@@ -1079,16 +1079,19 @@ function cekandroid()
 
 function startbackgroundmode(){
 				try {
-			
+          cordova.plugins.backgroundMode.setDefaults({
+            title: 'BSMI RADIO', 
+            text: 'broadcasting ...',
+            icon: 'ic_launcher',
+            color: "0E4291", 
+            resume: true,
+            hidden: false,
+            bigText: false
+          });			
 					cordova.plugins.backgroundMode.enable();				
           cordova.plugins.backgroundMode.on('activate', function() {
-             //cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
-             cordova.plugins.backgroundMode.configure({
-                  title: "BSMI Radio",
-                  text: "BSMI Radio on broadcasting ...",
-                  resume: true
-              });	
-              cordova.plugins.backgroundMode.overrideBackButton();
+             cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
+              //cordova.plugins.backgroundMode.overrideBackButton();
               //cordova.plugins.backgroundMode.unlock();
               //cordova.plugins.backgroundMode.excludeFromTaskList();
           });
