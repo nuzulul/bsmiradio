@@ -481,10 +481,16 @@ function launchFullScreen(element) {
 
 function off() {
   //launchFullScreen(document.documentElement);
+  if (istorage.getItem("username")===null)
+  {
+    myusername();
+  }
+  else
+  {
   cekandroid();
   
   readyapp();
-  
+  }
 }
 
 
@@ -726,7 +732,7 @@ function walkietalkie()
         });
     });
 
-    myusername();
+    
     
     
 }
@@ -1086,6 +1092,7 @@ function cekuser()
 {
   if (istorage.getItem("username")===null)
   {
+      
   }
   else
   {
@@ -1105,6 +1112,7 @@ function cekuser()
       {
 
           setTimeout(function () {
+              myusername();
               cekandroid();       
           }, 2000); 
 
@@ -1113,6 +1121,7 @@ function cekuser()
 }
 
 function onDeviceReady () {
+      myusername();
       cekandroid();
 }
 
