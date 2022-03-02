@@ -445,6 +445,7 @@ function resetfrequency()
   </div></div>
   <div id="pttblock" style="height:0px;position:relative;top:460px;left:80px;display:none;"><div style="width:200px;height:200px;background-color: rgba(0,0,0,0.5);"></div></div>
   <div id="scanblock" style="height:0px;position:relative;top:460px;left:80px;display:none;"><div style="width:200px;height:200px;background-color: rgba(0,0,0,0.5);"></div></div>
+  <div id="delayblock" style="height:0px;position:relative;top:460px;left:80px;display:none;"><div style="width:200px;height:200px;background-color: rgba(0,0,0,0.5);"><div id="delayexpired" style="width: 20px; height: 20px; position:relative; top:50%; left:50%; color:#fff;font-size:20px;">5</div></div></div>
 
   <img style="width:360px;" src="bsmiwalkietalkie.png"/>
   <center></center>
@@ -694,7 +695,9 @@ function walkietalkie()
                 document.getElementsByClassName("right")[0].style.backgroundColor = "white";
                 socket.emit('availability',"stopped",currentfrequency);
                 socket.emit('pttblock',"stopped",currentfrequency);
-                
+                document.getElementById("delayblock").style.display = "block";
+                $('#delayexpired').text('5');
+                delayexpired();                
             }
         });
         mediaRecorder.addEventListener("dataavailable", event => {
@@ -711,6 +714,23 @@ function walkietalkie()
     myusername();
     
     
+}
+
+function delayexpired()
+{
+    setTimeout(function () {
+          var expired = $('#delayexpired').text();
+          if (expired != 0)
+          {
+            var newexpired = expired-1;
+            $('#delayexpired').text(newexpired);
+            delayexpired();
+          }
+          else
+          {
+            document.getElementById("delayblock").style.display = "none";
+          }
+    }, 1000);
 }
 
 function joinfrequency(data)
