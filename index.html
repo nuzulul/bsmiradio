@@ -974,7 +974,7 @@ function joinlist()
       var data = Object.values(roomdata.users);
       for (i=0;i<data.length;i++)
       {
-          datalist += data[i].name+"</br>";
+          datalist += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16"> <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/> </svg> '+data[i].name+'</br>';
       }
       
       $('body').append('<div id="joinlist" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center>'+datalist+'</br><button id="joinlistclose" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">TUTUP</button></center></div></div>');
@@ -1030,14 +1030,14 @@ function startbackgroundmode(){
 			
 					cordova.plugins.backgroundMode.enable();					
           cordova.plugins.backgroundMode.on('activate', function() {
-             cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
+             //cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
              cordova.plugins.backgroundMode.configure({
                   title: "BSMI Radio",
                   text: "BSMI Radio on broadcasting ...",
                   resume: true
               });	
               //cordova.plugins.backgroundMode.overrideBackButton();
-              cordova.plugins.backgroundMode.unlock();
+              //cordova.plugins.backgroundMode.unlock();
               //cordova.plugins.backgroundMode.excludeFromTaskList();
           });
           				
