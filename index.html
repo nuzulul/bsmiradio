@@ -429,7 +429,7 @@ function resetfrequency()
 <div style="position:relative;top:0px;left: 50%;transform: translateX(-50%);width:360px;">
   <div style="height:0px;position:relative;top:235px;left:190px;"><div style="width:100px;height:20px;"><a style="font-size:10px;">Total online : <span class="usercount"></span></a></div></div>
   <div style="height:0px;position:relative;top:250px;left:60px;"><div style="width:170px;height:40px;"><span id="lcdf" style="color:red; font-size:30px;"></span><span id="mhz" style="color:red; font-size:20px;"> MHZ</span></div></div>
-  <div style="height:0px;position:relative;top:280px;left:60px;"><div style="width:170px;height:20px;"><a style="font-size:10px;">Join frequency : <span class="userjoin"></span></a></div></div>
+  <div style="height:0px;position:relative;top:280px;left:60px;"><div style="width:170px;height:20px;"><a onclick="joinlist();" style="font-size:10px;">Join frequency : <span class="userjoin"></span></a></div></div>
   <div style="height:0px;position:relative;top:265px;left:190px;"><div style="width:100px;height:40px;font-size:12px;word-wrap: break-word;overflow:hidden;"><span id="iswtavailable">Connecting please wait...</span></div></div>
   
   <div style="height:0px;position:relative;top:320px;left:0px;"><div style="width:360px;height:20px;"><center><button onclick="rfslidderbutton();" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">SET</button><button onclick="resetfrequency();" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">RESET</button><button onclick="scanrfbutton();" id="scanrf" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">SCAN</button><button onclick="echobutton();" id="echo" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">ECHO OFF</button><button onclick="myusername(true);" id="echo" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">USER</button><a href="https://support.google.com/chrome/answer/2693767?hl=id&co=GENIE.Platform%3DAndroid" target="_blank"><button onclick="" class="button" style="display:none;height: 40px margin: 0 auto; border-radius: 4px;">HELP</button></a></center></div></div>
@@ -452,7 +452,7 @@ function resetfrequency()
 </div>
 </div>
 <div id="rfslider" class="overlay" style="display:none;"><center><div style="width:400px;"><div id="myrfslider"></div></div><button onclick="document.getElementById('rfslider').style.display = 'none';" class="button" style="width: 200px; height: 40px margin: 0 auto; border-radius: 4px;">OK</button></center></div>
-<div id="overlay" onclick=""><div style="width:100%;background:white;margin:270px auto;padding-top:50px;padding-bottom:50px;"><center><p id="warning">Aplikasi ini membutuhkan akses mikrofon, kamera dan penyimpanan untuk berfungsi. Dengan Klik masuk anda menyetujui persyaratan dan ketentuan layanan. </br></br><button onclick="" class="button" style="width: 50%; height: 40px margin: 0 auto; border-radius: 4px;">MASUK</button></p></center></div></div>
+<div id="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center><p id="warning">Aplikasi ini membutuhkan akses mikrofon, kamera dan penyimpanan untuk berfungsi. Dengan Klik masuk anda menyetujui persyaratan dan ketentuan layanan. </br></br><button onclick="" class="button" style="width: 50%; height: 40px margin: 0 auto; border-radius: 4px;">MASUK</button></p></center></div></div>
 <div id="loader" class="loading">Loading&#8230;</div>
 <script>
 window.addEventListener('contextmenu', function (e) { 
@@ -570,7 +570,8 @@ socket.on('user', function (usercount) {
 
 socket.on('roomData', function (data) {
   //console.log('roomdata : '+data);
-  $('.userjoin').text(data.users.length)
+  $('.userjoin').text(data.users.length);
+  window.roomdata=data;
 });
 
 socket.on('scanrf', function (data) {
@@ -739,7 +740,7 @@ function joinfrequency(data)
         //console.log('joinfrequency : '+data);
 
         var socketid = window.socketid;
-        var username = window.socketid;
+        if (window.username === undefined){var username = ".....";}else{ var username = window.username+","+kota+","+provinsi;}
         var room = currentfrequency;
         
         socket.emit('joinfrequency', { username, room }, error => {
@@ -931,7 +932,7 @@ function myusername(force = false)
 {
     if (istorage.getItem("username")===null || force) {
          
-         $('body').append('<div id="formusername" class="overlay" onclick=""><div style="width:100%;height:auto;background:white;margin:270px auto;padding-top:10px;padding-bottom:10px;"><center><form id="formmyusername">nama <input id="username" autocapitalize="none" type="text" name="username" placeholder="huruf&angka" pattern="[a-z0-9]{5,50}" required validate/></br>provinsi <input id="provinsi" autocapitalize="none" type="text" name="provinsi" placeholder="huruf" pattern="[a-z]{3,50}" required validate/></br>kota <input id="kota" autocapitalize="none" type="text" name="kota" placeholder="huruf" pattern="[a-z]{3,50}" required validate/></form></br></br><button id="submitusername" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">SIMPAN</button></center></div></div>');
+         $('body').append('<div id="formusername" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center><form id="formmyusername">nama <input id="username" autocapitalize="none" type="text" name="username" placeholder="huruf&angka" pattern="[a-z0-9]{5,50}" required validate/></br>provinsi <input id="provinsi" autocapitalize="none" type="text" name="provinsi" placeholder="huruf" pattern="[a-z]{3,50}" required validate/></br>kota <input id="kota" autocapitalize="none" type="text" name="kota" placeholder="huruf" pattern="[a-z]{3,50}" required validate/></form></br></br><button id="submitusername" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">SIMPAN</button><button id="submitusernamecancel" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">BATAL</button></center></div></div>');
          $("#submitusername").click(function(){
             if (!$('#formmyusername')[0].checkValidity()) {
               console.log('invalid');
@@ -946,7 +947,11 @@ function myusername(force = false)
             window.username = username;
             window.provinsi = provinsi;
             window.kota = kota;
+            changefrequency(currentfrequency);
             //document.getElementById("formusername").style.display = "none";
+            $('#formusername').remove();
+         }); 
+         $("#submitusernamecancel").click(function(){
             $('#formusername').remove();
          }); 
     }
@@ -955,7 +960,23 @@ function myusername(force = false)
       window.username = istorage.getItem("username");
       window.provinsi = istorage.getItem("provinsi");
       window.kota = istorage.getItem("kota");
+      changefrequency(currentfrequency);
     }
+}
+
+function joinlist()
+{
+      var datalist="";
+      var data = Object.values(roomdata.users);
+      for (i=0;i<data.length;i++)
+      {
+          datalist += data[i].name+"</br>";
+      }
+      
+      $('body').append('<div id="joinlist" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center>'+datalist+'</br><button id="joinlistclose" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">TUTUP</button></center></div></div>');
+      $("#joinlistclose").click(function(){
+            $('#joinlist').remove();
+      }); 
 }
 
 function cekandroid()
