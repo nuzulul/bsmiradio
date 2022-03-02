@@ -563,6 +563,11 @@ socket.on("connect", () => {
     
     document.getElementById("overlay").onclick = function() {off()};
     document.getElementById("loader").style.display = "none";
+    var cekoverlay = window.getComputedStyle(document.getElementById("overlay"), null).display;console.log(cekoverlay);
+    if (cekoverlay == "block")
+    {
+        cekuser();
+    }
     
 }); 
 
@@ -1125,7 +1130,6 @@ function onDeviceReady () {
       cekandroid();
 }
 
-cekuser();
 
 $(document).ready(function(){
   
