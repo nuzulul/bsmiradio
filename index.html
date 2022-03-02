@@ -671,7 +671,13 @@ function walkietalkie()
                   //console.log('ended');
                   wtplayer();
                   $('#iswtavailable').text("Ready");
+                  
+                  const pttaudio = new Audio("ptt.mp3");
+                  pttaudio.play();
             }
+            
+            
+            
         }
         catch(err) {
         }
