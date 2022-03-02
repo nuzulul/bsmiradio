@@ -1073,7 +1073,8 @@ function cekandroid()
 function startbackgroundmode(){
 				try {
 			
-					cordova.plugins.backgroundMode.enable();					
+					cordova.plugins.backgroundMode.enable();
+					cordova.plugins.backgroundMode.overrideBackButton();					
           cordova.plugins.backgroundMode.on('activate', function() {
              //cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
              cordova.plugins.backgroundMode.configure({
