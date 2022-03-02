@@ -1073,8 +1073,7 @@ function cekandroid()
 function startbackgroundmode(){
 				try {
 			
-					cordova.plugins.backgroundMode.enable();
-					cordova.plugins.backgroundMode.overrideBackButton();					
+					cordova.plugins.backgroundMode.enable();				
           cordova.plugins.backgroundMode.on('activate', function() {
              //cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
              cordova.plugins.backgroundMode.configure({
@@ -1082,7 +1081,7 @@ function startbackgroundmode(){
                   text: "BSMI Radio on broadcasting ...",
                   resume: true
               });	
-              //cordova.plugins.backgroundMode.overrideBackButton();
+              cordova.plugins.backgroundMode.overrideBackButton();
               //cordova.plugins.backgroundMode.unlock();
               //cordova.plugins.backgroundMode.excludeFromTaskList();
           });
