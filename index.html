@@ -376,12 +376,13 @@ var firstfrequency;
 var istorage = window.localStorage;
 var rfrequency;
 var currentfrequency;
+var defaultfrequency = 10;
 
 
 if (istorage.getItem("randomfrequency")===null) {
   firstfrequency = randomnumbergenerator(10,99);
   istorage.setItem("randomfrequency",firstfrequency);
-  istorage.setItem("currentfrequency",firstfrequency);
+  istorage.setItem("currentfrequency",defaultfrequency);
   //rfrequency=firstfrequency;
   currentfrequency = istorage.getItem("currentfrequency");
 } else {
@@ -523,7 +524,7 @@ function readyapp()
       });   
 }
 
-currentfrequency = "10";
+//currentfrequency = "10";
 var server1="https://radio.bsmiapp.repl.co";
 var server2="https://bsmiradio.herokuapp.com";
 var server = server2;
@@ -621,7 +622,7 @@ function walkietalkie()
 {
 
     //lcdfrequency(currentfrequency);
-    resetfrequency();
+    //resetfrequency();
     // https://medium.com/@saurssaurav33/how-to-make-a-browser-walkie-talkie-using-node-js-and-socket-io-ae024bb9b378
 
     socket.on('audioMessage', function (audioChunks,myecho,mysocket,user) {
