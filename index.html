@@ -451,7 +451,7 @@ function resetfrequency()
   </div></div>
   <div id="pttblock" style="height:0px;position:relative;top:460px;left:80px;display:none;"><div style="width:200px;height:200px;background-color: rgba(0,0,0,0.5);"></div></div>
   <div id="scanblock" style="height:0px;position:relative;top:460px;left:80px;display:none;"><div style="width:200px;height:200px;background-color: rgba(0,0,0,0.5);"></div></div>
-  <div id="delayblock" style="height:0px;position:relative;top:460px;left:80px;display:none;"><div style="width:200px;height:200px;background-color: rgba(0,0,0,0.5);"><div id="delayexpired" style="width: 20px; height: 20px; position:relative; top:40%; left:40%; color:#fff;font-size:20px;">5</div></div></div>
+  <div id="delayblock" style="height:0px;position:relative;top:460px;left:80px;display:none;"><div style="width:200px;height:200px;background-color: rgba(0,0,0,0.5);"><div id="delayexpired" style="width: 20px; height: 20px; position:relative; top:40%; left:40%; color:#fff;font-size:20px;"></div></div></div>
 
   <img style="width:360px;" src="bsmiwalkietalkie.png"/>
   <center></center>
@@ -730,7 +730,7 @@ function walkietalkie()
                 socket.emit('availability',"stopped",currentfrequency);
                 socket.emit('pttblock',"stopped",currentfrequency);
                 document.getElementById("delayblock").style.display = "block";
-                $('#delayexpired').text('5');
+                $('#delayexpired').text('3');
                 delayexpired();                
             }
         });
@@ -1005,7 +1005,7 @@ function myusername(force = false)
 {
     if (istorage.getItem("username")===null || force) {
          
-         $('body').append('<div id="formusername" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center><form id="formmyusername">NAMA <input id="username" autocapitalize="none" type="text" name="username" placeholder="Huruf&Angka" pattern="[a-zA-Z0-9]{5,50}" required validate/></br>PROVINSI <input id="provinsi" autocapitalize="none" type="text" name="provinsi" placeholder="Huruf" pattern="[a-zA-Z]{3,50}" required validate/></br>KOTA <input id="kota" autocapitalize="none" type="text" name="kota" placeholder="Huruf" pattern="[a-zA-Z]{3,50}" required validate/></form></br></br><button id="submitusername" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">SIMPAN</button><button id="submitusernamecancel" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">BATAL</button></center></div></div>');
+         $('body').append('<div id="formusername" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center><form id="formmyusername">NAMA <input id="username" autocapitalize="none" type="text" name="username" placeholder="Huruf&Angka" pattern="[a-zA-Z0-9]{5,50}" required validate/></br></br>PROVINSI <input id="provinsi" autocapitalize="none" type="text" name="provinsi" placeholder="Huruf" pattern="[a-zA-Z]{3,50}" required validate/></br></br>KOTA <input id="kota" autocapitalize="none" type="text" name="kota" placeholder="Huruf" pattern="[a-zA-Z]{3,50}" required validate/></form></br></br><button id="submitusername" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">SIMPAN</button><button id="submitusernamecancel" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">BATAL</button></center></div></div>');
          $("#submitusername").click(function(){
             if (!$('#formmyusername')[0].checkValidity()) {
               console.log('invalid');
@@ -1027,6 +1027,13 @@ function myusername(force = false)
          $("#submitusernamecancel").click(function(){
             $('#formusername').remove();
          }); 
+         
+         if (force) 
+         {
+          $('#username').val(username);
+          $('#provinsi').val(provinsi);
+          $('#kota').val(kota);
+         }
     }
     else
     {
