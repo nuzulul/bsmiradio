@@ -58,7 +58,23 @@ const addUser = ({ id, name, room }) => {
   );
 
   if (!name || !room) return { error: 'Username and room are required.' };
-  if (existingUser) return { error: 'Username already exists.' };
+  //if (existingUser) return { error: 'Username already exists.' };
+
+  if (existingUser)
+  {
+    console.log("exist:"+existingUser.id);
+    const sids = io.of("/").adapter.sids;
+    const cek = sids.has(existingUser.id);
+    if (cek)
+    {
+      return { error: 'Username already exists.' };
+    }
+    else
+    {
+      removeUser(existingUser.id);
+    }
+    
+  }
 
   const user = { id, name, room };
 
