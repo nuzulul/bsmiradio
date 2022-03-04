@@ -368,12 +368,13 @@
     height: 100%;
     position: relative;
     float: left;
+    bottom:0;
     margin: 0px;
     height: calc(100% - 40px);
 }
 .fill {
-    background: LawnGreen;
-    height: 20px;
+    background: #FFCC00;
+    height: 5px;
     width: 100%;
     box-shadow: 0 0 3px rgba(0,0,0,.25),
         inset 1px 1px 1px rgba(255,255,255,.75),
@@ -458,7 +459,7 @@ function resetfrequency()
   <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
 </svg> Join frequency : <span class="userjoin"></span></a></div></div>
   <div style="height:0px;position:relative;top:265px;left:190px;"><div style="width:100px;height:40px;font-size:12px;word-wrap: break-word;overflow:hidden;"><span id="iswtavailable">Connecting please wait...</span></div></div>
-  <div style="height:0px;position:relative;top:265px;left:300px;"><div style="width:10px;height:40px;font-size:12px;word-wrap: break-word;overflow:show;background:white;"><div class="bar" id="mono"> <div class="fill" id="monoFill"></div> </div></div></div>
+  <div style="height:0px;position:relative;top:300px;left:300px;"><div style="width:10px;height:0px;font-size:12px;word-wrap: break-word;overflow:show;background:white;"><div class="bar" id="mono"> <div class="fill" id="monoFill"></div> </div></div></div>
   
   <div style="height:0px;position:relative;top:320px;left:0px;"><div style="width:360px;height:20px;"><center></br><button onclick="rfnext();" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">NEXT</button><button onclick="channelfrequency();" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">CHANNEL</button><button onclick="scanrfbutton();" id="scanrf" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">SCAN</button></br></br><button onclick="echobutton();" id="echo" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">ECHO OFF</button><button onclick="myusername(true);" id="echo" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;">USER</button><a href="https://support.google.com/chrome/answer/2693767?hl=id&co=GENIE.Platform%3DAndroid" target="_blank"><button onclick="" class="button" style="display:none;height: 40px margin: 0 auto; border-radius: 4px;">HELP</button></a></center></div></div>
 
@@ -1306,7 +1307,7 @@ function playSound(arraybuffer) {
         var array = new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(array);
         volumeBars.mono.style.height = Math.average(array) * 2 + "px";
-        volumeBars.mono.innerHTML = Math.floor(Math.average(array));
+        //volumeBars.mono.innerHTML = Math.floor(Math.average(array));
     }
 
     source.connect(analyser);
