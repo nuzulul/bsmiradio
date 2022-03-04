@@ -1299,7 +1299,7 @@ function playSound(arraybuffer) {
     });
     
     var gainNode = context.createGain();
-    gainNode.gain.value = 0;
+    gainNode.gain.value = -1;
 
     var analyser = context.createAnalyser();
     analyser.smoothingTimeConstant = 0.3;
