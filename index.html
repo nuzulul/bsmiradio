@@ -935,7 +935,8 @@ function scanfrequency()
       {
         nextrf = 10;
         changefrequency(nextrf);
-        socket.emit('scanrf',currentfrequency);
+        scanrfbutton();
+        //socket.emit('scanrf',currentfrequency);
       }
       
   }
