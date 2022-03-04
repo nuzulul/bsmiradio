@@ -719,7 +719,7 @@ function walkietalkie()
                   pttaudio.play();
             }
             
-            playsounddata(audioChunks);
+            playsounddata(audioBlob);
             
         }
         catch(err) {
@@ -1336,8 +1336,12 @@ Math.average = function(arguments) {
 
 function playsounddata(data)
 {
-    const audioarray = new ArrayBuffer(data);
-    playSound(audioarray);
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        playSound(e.target.result);
+    }
+    reader.readAsArrayBuffer(data);    
+    //playSound(audiobuffer);
 }
 
 $(document).ready(function(){
