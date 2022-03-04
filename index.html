@@ -431,6 +431,7 @@ function resetfrequency()
   <div style="height:0px;position:relative;top:185px;left:220px;"><div style="width:100px;height:20px;"><button onclick="powerbutton();" id="power" class="button" style="height: 40px margin: 0 auto; border-radius: 4px;background:green;color:white;">POWER ON</button></div></div>
   <div style="height:0px;position:relative;top:235px;left:60px;"><div style="width:150px;height:20px;overflow:hidden;"><a style="font-size:12px;"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-broadcast" viewBox="0 0 16 16"> <path d="M3.05 3.05a7 7 0 0 0 0 9.9.5.5 0 0 1-.707.707 8 8 0 0 1 0-11.314.5.5 0 0 1 .707.707zm2.122 2.122a4 4 0 0 0 0 5.656.5.5 0 1 1-.708.708 5 5 0 0 1 0-7.072.5.5 0 0 1 .708.708zm5.656-.708a.5.5 0 0 1 .708 0 5 5 0 0 1 0 7.072.5.5 0 1 1-.708-.708 4 4 0 0 0 0-5.656.5.5 0 0 1 0-.708zm2.122-2.12a.5.5 0 0 1 .707 0 8 8 0 0 1 0 11.313.5.5 0 0 1-.707-.707 7 7 0 0 0 0-9.9.5.5 0 0 1 0-.707zM10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/> </svg> <span id="userchannel" style="font-size:10px;">CHANNEL</span></a></div></div>
   <div style="height:0px;position:relative;top:235px;left:220px;"><div style="width:100px;height:20px;"><a style="font-size:10px;">Online : <span class="usercount"></span></a></div></div>
+  <div style="height:0px;position:relative;top:235px;left:290px;"><div style="width:40px;height:20px;color:white;" id="signal"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reception-4" viewBox="0 0 16 16"> <path d="M0 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-5zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-8zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-11z"/> </svg></div></div>
   <div style="height:0px;position:relative;top:250px;left:60px;"><div onclick="rfslidderbutton();" style="width:170px;height:40px;"><span id="lcdf" style="color:red; font-size:30px;"></span><span id="mhz" style="color:red; font-size:20px;"> MHZ</span></div></div>
   <div style="height:0px;position:relative;top:280px;left:60px;"><div onclick="joinlist();" style="width:170px;height:20px;"><a style="font-size:10px;"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
   <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -879,6 +880,7 @@ function powerbutton()
   {
     $('#power').text('POWER OFF');
     $('#power').css("background","red");
+    $('#signal').html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reception-0" viewBox="0 0 16 16"> <path d="M0 13.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/> </svg>');
     socket.disconnect();
     stopbackgroundmode();
     const audioeffect = new Audio("start.mp3");
@@ -888,6 +890,7 @@ function powerbutton()
   {
     $('#power').text('POWER ON');
     $('#power').css("background","green");
+    $('#signal').html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reception-4" viewBox="0 0 16 16"> <path d="M0 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-5zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-8zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-11z"/> </svg>');
     socket.connect();
     startbackgroundmode();
     const audioeffect = new Audio("start.mp3");
