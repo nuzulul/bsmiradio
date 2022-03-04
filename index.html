@@ -1315,7 +1315,7 @@ function playSound(arraybuffer) {
 
     source.connect(gainNode);
     source.connect(analyser);
-    source.connect(context.destination);
+    //source.connect(context.destination);
     jsNode.connect(context.destination);
     analyser.connect(jsNode);
 
