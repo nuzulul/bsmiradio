@@ -881,6 +881,8 @@ function powerbutton()
     $('#power').css("background","red");
     socket.disconnect();
     stopbackgroundmode();
+    const audioeffect = new Audio("start.mp3");
+    audioeffect.play();
   }
   else
   {
@@ -888,6 +890,8 @@ function powerbutton()
     $('#power').css("background","green");
     socket.connect();
     startbackgroundmode();
+    const audioeffect = new Audio("start.mp3");
+    audioeffect.play();
   }
 }
 
