@@ -880,6 +880,7 @@ function powerbutton()
     $('#power').text('POWER OFF');
     $('#power').css("background","red");
     socket.disconnect();
+    stopbackgroundmode();
   }
   else
   {
@@ -1199,6 +1200,12 @@ function startbackgroundmode(){
 					//cordova.plugins.backgroundMode.setDefaults({ silent: true });
 				}catch(err){}
 }	
+
+function stopbackgroundmode(){
+  try {
+    cordova.plugins.backgroundMode.disable();
+  }catch(err){}
+}
 
 
 
