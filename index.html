@@ -811,7 +811,7 @@ function joinfrequency(key="")
         if (window.username === undefined){var username = socketid;}else{ var username = window.username+","+kota+","+provinsi;}
         var room = currentfrequency;
         
-        $('.userjoin').text("-");
+        $('.userjoin').text("-");window.roomdata="";
         
         var mychannel = mychannels.find(channel => channel.rf === currentfrequency);
         if (mychannel === undefined)
@@ -1213,6 +1213,7 @@ function myusername(force = false)
 function joinlist()
 {
       var datalist="";
+      if (roomdata.users === undefined) return;
       var data = Object.values(roomdata.users);
       for (i=0;i<data.length;i++)
       {
