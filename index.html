@@ -701,7 +701,7 @@ function walkietalkie()
               }
               else
               {
-                audio.muted = false;
+                audio.muted = false;                
               }
             }
 
@@ -727,7 +727,7 @@ function walkietalkie()
                   wtplayer();
                   $('#iswtavailable').text("Ready");
                   
-                  if ((mysocket == socketid) && (myecho == 'ECHO OFF'))
+                  if (audio.muted)
                   {
                   }
                   else
