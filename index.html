@@ -915,6 +915,7 @@ function powerbutton()
     stopbackgroundmode();
     const audioeffect = new Audio("start.mp3");
     audioeffect.play();
+    setTimeout(function () {$('#iswtavailable').text("Power Off");}, 1000);
   }
   else
   {
@@ -1005,8 +1006,9 @@ function updateOnlineStatus(event) {
   {
     //$('#warning').text("Offline! Koneksi terputus");
     //document.getElementById("overlay").style.display = "block"; 
-    $('#iswtavailable').text("Offline");
+    setTimeout(function () {$('#iswtavailable').text("Offline");}, 1000);
     signaloff();
+    socket.disconnect();
     
   }
   if (condition == 'online')
@@ -1015,6 +1017,7 @@ function updateOnlineStatus(event) {
     //document.getElementById("overlay").style.display = "block"; 
     $('#iswtavailable').text("Online");
     signalon();
+    socket.connect();
     //changefrequency(currentfrequency);
     
   }
