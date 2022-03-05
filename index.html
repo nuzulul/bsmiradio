@@ -613,7 +613,7 @@ socket.on("connect", () => {
 
 socket.on("disconnect", () => {
     $('.usercount').text("-");
-    $('.userjoin').text("-");
+    $('.userjoin').text("-");window.roomdata="";
     $('#iswtavailable').text("Reconnecting...");
     console.log('socket : disconnected');
     //$('#warning').text("Koneksi terputus");
@@ -850,7 +850,7 @@ function joinfrequency(key="")
 
 var mychannels = [
 {rf:"10", nama:"HOME", info:"BANTUAN DAN DUKUNGAN"},
-{rf:"11", nama:"TANGGAP BENCANA", info:"TANGGAP BENCANA"},
+{rf:"11", nama:"TANGGAP BENCANA", info:"TANGGAP BENCANA", key:"111111"},
 {rf:"12", nama:"NASIONAL", info:"NASIONAL"},
 {rf:"13", nama:"JAWA TIMUR", info:"JAWA TIMUR"},
 {rf:"14", nama:"JAKARTA", info:"JAKARTA"},
@@ -886,7 +886,7 @@ var mychannels = [
 {rf:"44", nama:"MALUKU UTARA", info:"MALUKU UTARA"},
 {rf:"45", nama:"PAPUA", info:"PAPUA"},
 {rf:"46", nama:"PAPUA BARAT", info:"PAPUA BARAT"},
-{rf:"99", nama:"INFORMASI", info:"INFORMASI", key:"998877"},
+{rf:"99", nama:"PENGEMBANGAN", info:"PENGEMBANGAN", key:"998877"},
 ];
 
 function userchannel()
@@ -1234,7 +1234,7 @@ function joinlist()
 
 function showinfo(data)
 {
-      $('body').append('<div id="showinfo" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center>'+data+'</br><button id="showinfoclose" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">TUTUP</button></center></div></div>');
+      $('body').append('<div id="showinfo" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center>'+data+'</br></br><button id="showinfoclose" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">TUTUP</button></center></div></div>');
       $("#showinfoclose").click(function(){
             $('#showinfo').remove();
       }); 
@@ -1246,7 +1246,15 @@ function channelfrequency()
       $('#listchannel').append('<div class="channelclose" style="position:sticky;top:0px;right:0px!important;z-index:99999999;width:90%;text-align: right;margin-right:20px;"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16"> <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/> </svg></div>');
       for (var i=0;i < mychannels.length; i++)
       {
-        $('#listchannel').append('<button onclick="pilihfrequency('+mychannels[i].rf+');" class="button" style="width: 200px; height: 80px margin: 0 auto; border-radius: 4px;">'+mychannels[i].rf+' MHZ - '+mychannels[i].nama+'</button></br></br>');
+        if (mychannels[i].key !== undefined)
+        {
+          var key = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16"> <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/> </svg> ';
+        }
+        else
+        {
+          var key = "";
+        }
+        $('#listchannel').append('<button onclick="pilihfrequency('+mychannels[i].rf+');" class="button" style="width: 200px; height: 80px margin: 0 auto; border-radius: 4px;">'+key+' '+mychannels[i].rf+' MHZ - '+mychannels[i].nama+'</button></br></br>');
       }
       
       $('#listchannel').append('<button id="channelclose" onclick="" class="button channelclose" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;display:none;">TUTUP</button>');
@@ -1257,7 +1265,7 @@ function channelfrequency()
 
 function cekchannelkey()
 {
-          $('body').append('<div id="formchannelkey" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center>Kunci channel <input id="key" autocapitalize="none" type="text" name="key" placeholder="Angka" pattern="[0-9]{3,10}" required validate/></br></br><button id="submitchannelkey" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">SUBMIT</button><button id="submitchannelkeycancel" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">BATAL</button></center></div></div>');
+          $('body').append('<div id="formchannelkey" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center>Kunci channel <input id="key" autocapitalize="none" type="text" name="key" placeholder="" pattern="[0-9]{3,10}" required validate/></br></br><button id="submitchannelkey" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">SUBMIT</button><button id="submitchannelkeycancel" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">BATAL</button></center></div></div>');
           $("#submitchannelkeycancel").click(function(){
               $('#formchannelkey').remove();
               var rf = parseInt(currentfrequency);
