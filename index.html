@@ -408,6 +408,7 @@ var firstfrequency;
 var istorage = window.localStorage;
 var rfrequency;
 var currentfrequency;
+var pastfrequency;
 var defaultfrequency = 10;
 
 
@@ -426,6 +427,7 @@ if (istorage.getItem("randomfrequency")===null) {
 
 function changefrequency(frequencya){
 	var istorage = window.localStorage;
+	pastfrequency = currentfrequency;
 	istorage.setItem("currentfrequency",frequencya);
 	currentfrequency=istorage.getItem("currentfrequency");
 	lcdfrequency(currentfrequency);
@@ -1251,6 +1253,7 @@ function cekchannelkey()
           $('body').append('<div id="formchannelkey" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center>Kata sandi <input id="key" autocapitalize="none" type="text" name="key" placeholder="Angka" pattern="[0-9]{3,6}" required validate/></br></br><button id="submitchannelkey" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">SBMIT</button><button id="submitchannelkeycancel" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">BATAL</button></center></div></div>');
           $("#submitchannelkeycancel").click(function(){
               $('#formchannelkey').remove();
+              changefrequency(defaultfrequency);
           });
           $("#submitchannelkey").click(function(){
               if (!$('#key')[0].checkValidity()) {
