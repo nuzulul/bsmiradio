@@ -727,8 +727,11 @@ function walkietalkie()
                   wtplayer();
                   $('#iswtavailable').text("Ready");
                   
-                  const pttaudio = new Audio("ptt.mp3");
-                  pttaudio.play();
+                  if ((mysocket !== socketid) && (myecho !== 'ECHO OFF'))
+                  {
+                    const pttaudio = new Audio("ptt.mp3");
+                    pttaudio.play();
+                  }
             }
             
             playsounddata(audioBlob);
