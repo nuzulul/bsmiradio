@@ -492,7 +492,7 @@ function resetfrequency()
   <center></center>
 </div>
 </div>
-<div id="rfslider" class="overlay" style="display:none;"><center><div style="width:400px;"><div id="myrfslider"></div></div><button onclick="document.getElementById('rfslider').style.display = 'none';" class="button" style="width: 200px; height: 40px margin: 0 auto; border-radius: 4px;">OK</button></center></div>
+<div id="rfslider" class="overlay" style="display:none;"><center><div style="width:400px;"><div id="myrfslider"></div></div><button onclick="rfsliderok();" class="button" style="width: 200px; height: 40px margin: 0 auto; border-radius: 4px;">OK</button></center></div>
 <div id="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center><p id="warning">Untuk berbagi modulasi dibutuhkan akses mikrofon, kamera dan penyimpanan. Dengan klik masuk anda menyetujui persyaratan dan ketentuan layanan. </br></br><button onclick="" class="button" style="width: 50%; height: 40px margin: 0 auto; border-radius: 4px;">MASUK</button></p></center></div></div>
 <div id="loader" class="loading">Loading&#8230;</div>
 <script>
@@ -799,15 +799,36 @@ function delayexpired()
     }, 1000);
 }
 
-function joinfrequency(data)
+function joinfrequency(key="")
 {
         //console.log('joinfrequency : '+data);
         
-        userchannel();
+        //userchannel();
 
         var socketid = window.socketid;
-        if (window.username === undefined){var username = ".....";}else{ var username = window.username+","+kota+","+provinsi;}
+        if (window.username === undefined){var username = socketid;}else{ var username = window.username+","+kota+","+provinsi;}
         var room = currentfrequency;
+        
+        $('.userjoin').text("-");
+        
+        var mychannel = mychannels.find(channel => channel.rf === currentfrequency);
+        if (mychannel === undefined)
+        {
+          $('#userchannel').text("CHANNEL");
+        }
+        else
+        {
+          $('#userchannel').text(mychannel.nama);
+          var channelkey = mychannel.key;
+          if (channelkey !== undefined)
+          {
+              if (channelkey !== key)
+              {
+                cekchannelkey();
+                return;
+              }
+          }
+        }
         
         socket.emit('joinfrequency', { username, room }, error => {
           if (error) {
@@ -857,6 +878,7 @@ var mychannels = [
 {rf:"44", nama:"MALUKU UTARA", info:"MALUKU UTARA"},
 {rf:"45", nama:"PAPUA", info:"PAPUA"},
 {rf:"46", nama:"PAPUA BARAT", info:"PAPUA BARAT"},
+{rf:"99", nama:"INFORMASI", info:"INFORMASI", key:"998877"},
 ];
 
 function userchannel()
@@ -947,6 +969,24 @@ function scanfrequency()
   {
       var rf = parseInt(currentfrequency);
       var nextrf = rf+1;
+      
+      while (nextrf < 100) {
+          var mychannel = mychannels.find(channel => channel.rf === nextrf.toString());
+          if (mychannel === undefined)
+          {
+            break;
+          }
+          else
+          {
+            var channelkey = mychannel.key;
+            if (channelkey === undefined)
+            {
+              break;
+            }
+          }      
+          nextrf++;
+      }
+      
       if (nextrf < 100)
       {
         changefrequency(nextrf);
@@ -1060,6 +1100,16 @@ function rfslidderbutton()
   {
     var data = $("#myrfslider > ul > li > span.sliderValue").text();
     //console.log(data);
+
+    var mychannel = mychannels.find(channel => channel.rf === data);
+    if (mychannel !== undefined)
+    {
+      var channelkey = mychannel.key;
+      if (channelkey !== undefined)
+      {
+        return;
+      }
+    }   
     changefrequency(data);
   }
 
@@ -1078,6 +1128,13 @@ function rfslidderbutton()
   };
 
   observer.observe(target, config);
+}
+
+function rfsliderok()
+{
+ document.getElementById("rfslider").style.display = "none";
+ var data = $("#myrfslider > ul > li > span.sliderValue").text();
+ changefrequency(data);
 }
 
 function stringtohash(data){
@@ -1187,6 +1244,23 @@ function channelfrequency()
       $(".channelclose").click(function(){
             $('#channel').remove();
       }); 
+}
+
+function cekchannelkey()
+{
+          $('body').append('<div id="formchannelkey" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center>Kata sandi <input id="key" autocapitalize="none" type="text" name="key" placeholder="Angka" pattern="[0-9]{3,6}" required validate/></br></br><button id="submitchannelkey" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">SBMIT</button><button id="submitchannelkeycancel" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">BATAL</button></center></div></div>');
+          $("#submitchannelkeycancel").click(function(){
+              $('#formchannelkey').remove();
+          });
+          $("#submitchannelkey").click(function(){
+              if (!$('#key')[0].checkValidity()) {
+                console.log('invalid');
+                return;
+              }
+              var key = $('#key').val();
+              $('#formchannelkey').remove();
+              joinfrequency(key);
+          });
 }
 
 function pilihfrequency(data)
