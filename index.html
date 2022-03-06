@@ -590,6 +590,13 @@ $("#echo").hide();
 const configuration = {
     // Using From https://www.metered.ca/tools/openrelay/
     "iceServers": [
+    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'stun:global.stun.twilio.com:3478?transport=udp' },
+    {
+      urls: 'turn:numb.viagenie.ca',
+      credential: 'myturn33',
+      username: 'hxuwb10o@anonaddy.me',
+    },
     {
       urls: "stun:openrelay.metered.ca:80"
     },
