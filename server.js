@@ -201,7 +201,7 @@ io.on("connection", function(socket) {
   socket.on("availability", function(message,sfrequency,username) {
    //socket.join(sfrequency);
    //io.to(sfrequency).emit("availability", message);
-   socket.to(sfrequency).emit("availability", message,username);
+   socket.to(sfrequency).emit("availability", message,username,socket.id);
    console.log(sfrequency,message)
 
   });
