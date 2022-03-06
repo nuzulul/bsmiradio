@@ -925,6 +925,7 @@ function walkietalkie()
                 socket.emit('availability',"started",currentfrequency,myuser);
                 mediaRecorder.start();
                 unmutestream();
+                playStream(stream);
 
         }).bind('mouseup mouseleave touchend', function () {
             if (mediaRecorder.state !== 'inactive') {
