@@ -1016,6 +1016,9 @@ function joinfrequency(key="")
           else
           {           
             if (live){
+              document.getElementById("delayblock").style.display = "block";
+              $('#delayexpired').text('3');
+              delayexpired(); 
               var rf = currentfrequency;
               clearpeer();
               setTimeout(function () {
