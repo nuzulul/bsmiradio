@@ -7,6 +7,7 @@
  <script src="https://ngawur.netlify.app/ngawur/lib/js-range-slider/js-range-slider.js"></script>
  <link href="https://ngawur.netlify.app/ngawur/lib/js-range-slider/js-range-slider.css" type="text/css">
  <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/simple-peer/9.11.1/simplepeer.min.js" integrity="sha512-0f7Ahsuvr+/P2btTY4mZIw9Vl23lS6LY/Y7amdkmUg2dqsUF+cTe4QjWvj/NIBHJoGksOiqndKQuI9yzn2hB0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
  <title>BSMI RADIO</title>
 </head>
 <style>
@@ -409,7 +410,9 @@ var istorage = window.localStorage;
 var rfrequency;
 var currentfrequency;
 var pastfrequency;
+var peerfrequency;
 var defaultfrequency = 10;
+
 
 
 if (istorage.getItem("randomfrequency")===null) {
@@ -497,6 +500,7 @@ function resetfrequency()
 <div id="rfslider" class="overlay" style="display:none;"><center><div style="width:400px;"><div id="myrfslider"></div></div><button onclick="rfsliderok();" class="button" style="width: 200px; height: 40px margin: 0 auto; border-radius: 4px;">OK</button></center></div>
 <div id="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center><p id="warning">Untuk berbagi modulasi dibutuhkan akses mikrofon, kamera dan penyimpanan. Dengan klik masuk anda menyetujui persyaratan dan ketentuan layanan. </br></br><button onclick="" class="button" style="width: 50%; height: 40px margin: 0 auto; border-radius: 4px;">MASUK</button></p></center></div></div>
 <div id="loader" class="loading">Loading&#8230;</div>
+<div id="audios" style="display:none;"></div>
 <script>
 window.addEventListener('contextmenu', function (e) { 
 // do something here... 
@@ -572,6 +576,34 @@ function readyapp()
 var server1="https://radio.bsmiapp.repl.co";
 var server2="https://bsmiradio.herokuapp.com";
 var server = server2;
+var live = true;
+let localStream = null;
+let peers = {}
+const peeraudio = new Audio;
+
+const configuration = {
+    // Using From https://www.metered.ca/tools/openrelay/
+    "iceServers": [
+    {
+      urls: "stun:openrelay.metered.ca:80"
+    },
+    {
+      urls: "turn:openrelay.metered.ca:80",
+      username: "openrelayproject",
+      credential: "openrelayproject"
+    },
+    {
+      urls: "turn:openrelay.metered.ca:443",
+      username: "openrelayproject",
+      credential: "openrelayproject"
+    },
+    {
+      urls: "turn:openrelay.metered.ca:443?transport=tcp",
+      username: "openrelayproject",
+      credential: "openrelayproject"
+    }
+  ]
+}
 
 if (window.location.href.indexOf("localhost") > -1) {
           console.log('server : localhost');
@@ -619,6 +651,7 @@ socket.on("disconnect", () => {
     //$('#warning').text("Koneksi terputus");
     //document.getElementById("overlay").style.display = "block"; 
     document.getElementById("pttblock").style.display = "block";
+    clearpeer();
 });
 
 socket.on('user', function (usercount) {
@@ -671,7 +704,117 @@ socket.on('pttblock', function (message) {
     }
 });
 
+socket.on('initReceive', socket_id => {
+    console.log('INIT RECEIVE ' + socket_id)
+    addPeer(socket_id, false)
 
+    socket.emit('initSend', socket_id)
+})
+
+socket.on('initSend', socket_id => {
+    console.log('INIT SEND ' + socket_id)
+    addPeer(socket_id, true)
+})
+
+socket.on('removePeer', socket_id => {
+    console.log('removing peer ' + socket_id)
+    removePeer(socket_id)
+})
+
+socket.on('signal', data => {
+    peers[data.socket_id].signal(data.signal)
+})
+
+function addPeer(socket_id, am_initiator) {
+    peers[socket_id] = new SimplePeer({
+        initiator: am_initiator,
+        stream: localStream,
+        config: configuration
+    })
+
+    peers[socket_id].on('signal', data => {
+        socket.emit('signal', {
+            signal: data,
+            socket_id: socket_id
+        })
+    })
+
+    peers[socket_id].on('stream', stream => {
+         createaudio(stream,socket_id);
+    })
+
+    peers[socket_id].on('data', data => {
+         console.log('got a message from peer: ' +socket_id+" -> "+ data)
+    })
+
+}
+
+function createaudio(stream,socket_id)
+{
+        let newAud = document.createElement('audio')
+        newAud.srcObject = stream
+        newAud.id = socket_id
+        newAud.playsinline = false
+        newAud.autoplay = true
+        newAud.className = "aud"
+        audios.appendChild(newAud)
+}
+
+function removePeer(socket_id) {
+    let audioEl = document.getElementById(socket_id)
+    if (audioEl) {
+
+        const tracks = audioEl.srcObject.getTracks();
+
+        tracks.forEach(function (track) {
+            track.stop()
+        })
+
+        audioEl.srcObject = null
+        audioEl.parentNode.removeChild(audioEl)
+    }
+    if (peers[socket_id]) peers[socket_id].destroy()
+    delete peers[socket_id]
+}
+
+function toggleMute() {
+    for (let index in localStream.getAudioTracks()) {
+        localStream.getAudioTracks()[index].enabled = !localStream.getAudioTracks()[index].enabled
+    }
+}
+
+function clearpeer()
+{
+    for (let socket_id in peers) {
+        removePeer(socket_id)
+    }
+}
+
+function createpeer(rf)
+{
+if (rf == currentfrequency)
+  {
+    console.log('same');
+    socket.emit('removePeer', peerfrequency);
+    peerfrequency = currentfrequency;
+    socket.emit('initReceive', currentfrequency);
+    
+  }
+}
+
+function mutestream()
+{
+    for (let index in localStream.getAudioTracks()) {
+        localStream.getAudioTracks()[index].enabled = false;
+    }
+}
+
+function unmutestream()
+{
+    for (let index in localStream.getAudioTracks()) {
+        localStream.getAudioTracks()[index].enabled = true;
+    }
+}
 
 function walkietalkie()
 {
@@ -746,6 +889,8 @@ function walkietalkie()
 
   navigator.mediaDevices.getUserMedia({ audio: true })
     .then(stream => {
+        localStream = stream;
+        mutestream();
         const mediaRecorder = new MediaRecorder(stream);
         var audioChunks = [];
         var mysocket = socketid;
@@ -759,10 +904,12 @@ function walkietalkie()
                 socket.emit('pttblock',"started",currentfrequency);
                 socket.emit('availability',"started",currentfrequency,myuser);
                 mediaRecorder.start();
+                unmutestream();
 
         }).bind('mouseup mouseleave touchend', function () {
             if (mediaRecorder.state !== 'inactive') {
                 mediaRecorder.stop();
+                mutestream();
                 $(this).toggleClass("paused");
                 $('#iswtavailable').text("Ready");
                 document.getElementsByClassName("left")[0].style.backgroundColor = "white";
@@ -780,7 +927,7 @@ function walkietalkie()
         });
         mediaRecorder.addEventListener("stop", () => {
             //socket.broadcast.emit('audioMessage', audioChunks);
-            socket.emit('audioMessage', audioChunks,currentfrequency,myecho,mysocket,myuser);
+            if (live){}else{socket.emit('audioMessage', audioChunks,currentfrequency,myecho,mysocket,myuser);}
             audioChunks = [];
         });
     });
@@ -844,6 +991,16 @@ function joinfrequency(key="")
             myusername(true);
             showinfo(error);
             
+          }
+          else
+          {           
+            if (live){
+              var rf = currentfrequency;
+              clearpeer();
+              setTimeout(function () {
+                createpeer(rf);
+              },2000);
+            }          
           }
         });
 }
