@@ -705,13 +705,15 @@ socket.on('availability', function (message,user,socket_id) {
             document.getElementById("iswtavailable").innerHTML = "Busy...";
           }
             document.getElementsByClassName("left")[0].style.backgroundColor = "red";
-            document.getElementsByClassName("right")[0].style.backgroundColor = "red";               
+            document.getElementsByClassName("right")[0].style.backgroundColor = "red";
+            document.getElementById("pttblock").style.display = "block";               
                   //const pttaudio = new Audio("ptt.mp3");
                   //pttaudio.play();
         } else {
             document.getElementById("iswtavailable").innerHTML = "Ready";
             document.getElementsByClassName("left")[0].style.backgroundColor = "white";
             document.getElementsByClassName("right")[0].style.backgroundColor = "white";
+            document.getElementById("pttblock").style.display = "none";
             if (live)
             {
                   const pttaudio = new Audio("ptt.mp3");
@@ -928,7 +930,7 @@ function walkietalkie()
                 $('#iswtavailable').text("Broadcast ...");
                 document.getElementsByClassName("left")[0].style.backgroundColor = "red";
                 document.getElementsByClassName("right")[0].style.backgroundColor = "red"; 
-                socket.emit('pttblock',"started",currentfrequency);
+                //socket.emit('pttblock',"started",currentfrequency);
                 socket.emit('availability',"started",currentfrequency,myuser);
                 mediaRecorder.start();
                 unmutestream();
@@ -943,7 +945,7 @@ function walkietalkie()
                 document.getElementsByClassName("left")[0].style.backgroundColor = "white";
                 document.getElementsByClassName("right")[0].style.backgroundColor = "white";
                 socket.emit('availability',"stopped",currentfrequency);
-                socket.emit('pttblock',"stopped",currentfrequency);
+                //socket.emit('pttblock',"stopped",currentfrequency);
                 document.getElementById("delayblock").style.display = "block";
                 $('#delayexpired').text('3');
                 delayexpired();                
