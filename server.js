@@ -49,8 +49,6 @@ app.get('/fetch', function (req, res) {
 
 const users = [];
 
-peers = {}
-
 const addUser = ({ id, name, room }) => {
   name = name;
   room = room;
@@ -102,7 +100,6 @@ io.on("connection", function(socket) {
   Usercounter = Usercounter + 1;
   io.emit("user", Usercounter);
   console.log("a user is connected");
-  peers[socket.id] = socket;
 
   socket.on("disconnect", function() {
 
@@ -121,8 +118,7 @@ io.on("connection", function(socket) {
           users: getUsersInRoom(user.room)
         });
         
-        io.to(user.room).emit('removePeer', socket.id);
-        delete peers[socket.id];    
+        io.to(user.room).emit('removePeer', socket.id); 
       }      
          
   });
@@ -244,8 +240,7 @@ io.on("connection", function(socket) {
 
   socket.on('signal', data => {
       console.log('sending signal from ' + socket.id + ' to ', data)
-      if(!peers[data.socket_id])return
-      peers[data.socket_id].emit('signal', {
+      socket.to(data.socket_id).emit('signal', {
           socket_id: socket.id,
           signal: data.signal
       })
@@ -253,7 +248,7 @@ io.on("connection", function(socket) {
 
   socket.on('initSend', init_socket_id => {
       console.log('INIT SEND by ' + socket.id + ' for ' + init_socket_id)
-      peers[init_socket_id].emit('initSend', socket.id)
+      socket.to(init_socket_id).emit('initSend', socket.id)
   });
 
 });

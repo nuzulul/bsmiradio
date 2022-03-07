@@ -580,8 +580,6 @@ var server = server2;
 var live = true;
 let localStream = null;
 let peers = {}
-const peeraudio = new Audio;
-let sources = {}
 
 if (live)
 {
@@ -1021,7 +1019,8 @@ function joinfrequency(key="")
             console.log(error);
             myusername(true);
             showinfo(error);
-            
+              document.getElementById("delayblock").style.display = "block";
+              $('#delayexpired').text('');             
           }
           else
           {           
@@ -1033,6 +1032,10 @@ function joinfrequency(key="")
               setTimeout(function () {
                 createpeer(rf);
               },2000);
+            }
+            else
+            {
+              document.getElementById("delayblock").style.display = "none";
             }          
           }
         });
