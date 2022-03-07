@@ -825,7 +825,7 @@ if (rf == currentfrequency)
     socket.emit('removePeer', peerfrequency);
     peerfrequency = currentfrequency;
     socket.emit('initReceive', currentfrequency);
-    
+    document.getElementById("delayblock").style.display = "none";
   }
 }
 
@@ -1024,8 +1024,7 @@ function joinfrequency(key="")
           {           
             if (live){
               document.getElementById("delayblock").style.display = "block";
-              $('#delayexpired').text('3');
-              delayexpired(); 
+              $('#delayexpired').text(''); 
               var rf = currentfrequency;
               clearpeer();
               setTimeout(function () {
