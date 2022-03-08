@@ -664,6 +664,7 @@ socket.on("disconnect", () => {
     //document.getElementById("overlay").style.display = "block"; 
     document.getElementById("pttblock").style.display = "block";
     clearpeer();
+    customchannel("disconnect");
 });
 
 socket.on('user', function (usercount) {
@@ -1046,7 +1047,7 @@ function joinfrequency(key="")
         });
 }
 
-function customchannel()
+function customchannel(data="")
 {
   if (currentfrequency == "60")
   {
@@ -1056,6 +1057,8 @@ function customchannel()
                 audioEl.src = null
                 audioEl.parentNode.removeChild(audioEl)
             }   
+
+            if (data == "disconnect") return;
 
             setTimeout(function () {
               if (currentfrequency == "60") document.getElementById("iswtavailable").innerHTML = "bsmiradiofm,surabaya,jatim";
