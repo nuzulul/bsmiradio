@@ -1058,7 +1058,14 @@ function customchannel(data="")
                 audioEl.parentNode.removeChild(audioEl)
             }   
 
-            if (data == "disconnect") return;
+            if (data == "disconnect") {
+              document.getElementsByClassName("left")[0].style.backgroundColor = "white";
+              document.getElementsByClassName("right")[0].style.backgroundColor = "white";
+              return;
+            }
+            
+            var power = $('#power').text();
+            if (power == "POWER OFF") return;
 
             setTimeout(function () {
               if (currentfrequency == "60") document.getElementById("iswtavailable").innerHTML = "bsmiradiofm,surabaya,jatim";
@@ -1084,10 +1091,10 @@ function customchannel(data="")
   }
   else if (pastfrequency == "60")
   {
-            document.getElementById("iswtavailable").innerHTML = "Ready";
+            if (socket.connected) document.getElementById("iswtavailable").innerHTML = "Ready";
             document.getElementsByClassName("left")[0].style.backgroundColor = "white";
             document.getElementsByClassName("right")[0].style.backgroundColor = "white";
-            document.getElementById("pttblock").style.display = "none";
+            if (socket.connected) document.getElementById("pttblock").style.display = "none";
             let audioEl = document.getElementById("audio60");
             if (audioEl) { 
                 audioEl.srcObject = null
