@@ -1068,7 +1068,9 @@ function customchannel(data="")
             if (power == "POWER OFF") return;
 
             setTimeout(function () {
-              if (currentfrequency == "60") document.getElementById("iswtavailable").innerHTML = "BSMIradioFM,Surabaya,Jatim";
+              if (currentfrequency == "60") {
+                document.getElementById("iswtavailable").innerHTML = "bsmiradioFM,Surabaya,Jatim";
+              }
             },3000);
             
             document.getElementsByClassName("left")[0].style.backgroundColor = "red";
