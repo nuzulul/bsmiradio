@@ -1058,7 +1058,7 @@ function customchannel()
             }   
 
             setTimeout(function () {
-              document.getElementById("iswtavailable").innerHTML = "bsmiradiofm,surabaya,jatim";
+              if (currentfrequency == "60") document.getElementById("iswtavailable").innerHTML = "bsmiradiofm,surabaya,jatim";
             },3000);
             
             document.getElementsByClassName("left")[0].style.backgroundColor = "red";
