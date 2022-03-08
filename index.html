@@ -1087,7 +1087,6 @@ function customchannel(data="")
             var audioElement = document.getElementById("audio60");
             //playStreamUrl(document.getElementById("audio60"),"audio60");
             audioElement.addEventListener("canplay", function() {
-                console.log("yes");
                 playStreamUrl(audioElement,"audio60");
             });
   }
@@ -1694,21 +1693,20 @@ function playSound(arraybuffer) {
     analyser.smoothingTimeConstant = 0.3;
     analyser.fftSize = 1024;
 
-    jsNode = context.createScriptProcessor(2048, 1, 1);
-    jsNode.onaudioprocess = function() {
-        var array = new Uint8Array(analyser.frequencyBinCount);
-        analyser.getByteFrequencyData(array);
-        volumeBars.mono.style.height = Math.average(array) * 2 + "px";
-        //volumeBars.mono.innerHTML = Math.floor(Math.average(array));
-    }
-
     source.connect(gainNode);
     source.connect(analyser);
     //source.connect(context.destination);
-    jsNode.connect(context.destination);
-    analyser.connect(jsNode);
-
+    
     source.start();
+
+    var array = new Uint8Array(analyser.frequencyBinCount);
+    function renderFrame() {
+        requestAnimationFrame(renderFrame);
+        analyser.getByteFrequencyData(array);
+        volumeBars.mono.style.height = Math.average(array) * 2 + "px";      
+    }
+    renderFrame();
+    
 }
 
 function playStream(stream) {
@@ -1724,19 +1722,17 @@ function playStream(stream) {
     analyser.smoothingTimeConstant = 0.3;
     analyser.fftSize = 1024;
 
-    jsNode = context.createScriptProcessor(2048, 1, 1);
-    jsNode.onaudioprocess = function() {
-        var array = new Uint8Array(analyser.frequencyBinCount);
-        analyser.getByteFrequencyData(array);
-        volumeBars.mono.style.height = Math.average(array) * 2 + "px";
-        //volumeBars.mono.innerHTML = Math.floor(Math.average(array));
-    }
-
     source.connect(gainNode);
     source.connect(analyser);
     //source.connect(context.destination);
-    jsNode.connect(context.destination);
-    analyser.connect(jsNode);
+
+    var array = new Uint8Array(analyser.frequencyBinCount);
+    function renderFrame() {
+        requestAnimationFrame(renderFrame);
+        analyser.getByteFrequencyData(array);
+        volumeBars.mono.style.height = Math.average(array) * 2 + "px";      
+    }
+    renderFrame();
 }
 
 function playStreamUrl(audio) {
@@ -1752,19 +1748,17 @@ function playStreamUrl(audio) {
     analyser.smoothingTimeConstant = 0.3;
     analyser.fftSize = 1024;
 
-    jsNode = context.createScriptProcessor(2048, 1, 1);
-    jsNode.onaudioprocess = function() {
-        var array = new Uint8Array(analyser.frequencyBinCount);
-        analyser.getByteFrequencyData(array);
-        volumeBars.mono.style.height = Math.average(array) * 2 + "px";
-        //volumeBars.mono.innerHTML = Math.floor(Math.average(array));
-    }
-
     source.connect(gainNode);
     source.connect(analyser);
     source.connect(context.destination);
-    jsNode.connect(context.destination);
-    analyser.connect(jsNode);
+
+    var array = new Uint8Array(analyser.frequencyBinCount);
+    function renderFrame() {
+        requestAnimationFrame(renderFrame);
+        analyser.getByteFrequencyData(array);
+        volumeBars.mono.style.height = Math.average(array) * 2 + "px";      
+    }
+    renderFrame();
 }
 
 Math.average = function(arguments) {
@@ -1909,7 +1903,7 @@ $(document).ready(function(){
 </script>
 
 <!-- Cordova -->
-<script type="text/javascript" src="cordova.js"></script>
+<!-- <script type="text/javascript" src="cordova.js"></script> -->
 <script type="text/javascript" src="https://cdvfile/localhost/assets/www/cordova.js"></script>
   
 </body>
