@@ -675,7 +675,7 @@ socket.on('roomData', function (data) {
   //console.log('roomdata : '+data);
   $('.userjoin').text(data.users.length);
   window.roomdata=data;
-  $('#iswtavailable').text("Ready");
+  if (currentfrequency != "60") $('#iswtavailable').text("Ready");
 });
 
 socket.on('scanrf', function (data) {
@@ -1035,7 +1035,7 @@ function joinfrequency(key="")
               var rf = currentfrequency;
               clearpeer();
               setTimeout(function () {
-                createpeer(rf);
+                if (currentfrequency != "60") createpeer(rf);
               },2000);
             }
             else
