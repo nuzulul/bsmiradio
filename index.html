@@ -698,7 +698,7 @@ socket.on('availability', function (message,user,socket_id) {
           {
             document.getElementById("iswtavailable").innerHTML = user;
             let audioEl = document.getElementById(socket_id);
-            playStream(audioEl.srcObject);
+            if (audioEl) playStream(audioEl.srcObject);
           }
           else
           {
