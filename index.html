@@ -995,6 +995,8 @@ function joinfrequency(key="")
         
         $('.userjoin').text("-");window.roomdata="";
         
+        customchannel();
+        
         var mychannel = mychannels.find(channel => channel.rf === currentfrequency);
         if (mychannel === undefined)
         {
@@ -1013,6 +1015,8 @@ function joinfrequency(key="")
               }
           }
         }
+        
+        
         
         socket.emit('joinfrequency', { username, room }, error => {
           if (error) {
@@ -1036,9 +1040,58 @@ function joinfrequency(key="")
             else
             {
               document.getElementById("delayblock").style.display = "none";
-            }          
+            }
+                      
           }
         });
+}
+
+function customchannel()
+{
+  if (currentfrequency == "60")
+  {
+            let audioEl = document.getElementById("audio60");
+            if (audioEl) { 
+                audioEl.srcObject = null
+                audioEl.src = null
+                audioEl.parentNode.removeChild(audioEl)
+            }   
+
+            setTimeout(function () {
+              document.getElementById("iswtavailable").innerHTML = "bsmiradiofm,surabaya,jatim";
+            },3000);
+            
+            document.getElementsByClassName("left")[0].style.backgroundColor = "red";
+            document.getElementsByClassName("right")[0].style.backgroundColor = "red";
+            document.getElementById("pttblock").style.display = "block";
+            let newAud = document.createElement('audio');
+            newAud.src = "https://qurango.net/radio/albaqarah";
+            newAud.id = "audio60";
+            newAud.playsinline = false;
+            newAud.autoplay = true;
+            newAud.className = "aud";
+            newAud.crossOrigin = 'anonymous';
+            audios.appendChild(newAud);
+            var audioElement = document.getElementById("audio60");
+            //playStreamUrl(document.getElementById("audio60"),"audio60");
+            audioElement.addEventListener("canplay", function() {
+                console.log("yes");
+                playStreamUrl(audioElement,"audio60");
+            });
+  }
+  else if (pastfrequency == "60")
+  {
+            document.getElementById("iswtavailable").innerHTML = "Ready";
+            document.getElementsByClassName("left")[0].style.backgroundColor = "white";
+            document.getElementsByClassName("right")[0].style.backgroundColor = "white";
+            document.getElementById("pttblock").style.display = "none";
+            let audioEl = document.getElementById("audio60");
+            if (audioEl) { 
+                audioEl.srcObject = null
+                audioEl.src = null
+                audioEl.parentNode.removeChild(audioEl)
+            }    
+  }
 }
 
 var mychannels = [
@@ -1080,6 +1133,7 @@ var mychannels = [
 {rf:"51", nama:"MALUKU UTARA", info:"MALUKU UTARA"},
 {rf:"52", nama:"PAPUA", info:"PAPUA"},
 {rf:"53", nama:"PAPUA BARAT", info:"PAPUA BARAT"},
+{rf:"60", nama:"BSMI RADIO FM", info:"MUROTAL"},
 {rf:"99", nama:"PENGEMBANGAN", info:"PENGEMBANGAN", key:"998877"},
 ];
 
@@ -1669,6 +1723,34 @@ function playStream(stream) {
     source.connect(gainNode);
     source.connect(analyser);
     //source.connect(context.destination);
+    jsNode.connect(context.destination);
+    analyser.connect(jsNode);
+}
+
+function playStreamUrl(audio) {
+    context.close();
+    context	= new AudioContext();
+
+    var source = context.createMediaElementSource(audio);
+    
+    var gainNode = context.createGain();
+    gainNode.gain.value = -1;
+
+    var analyser = context.createAnalyser();
+    analyser.smoothingTimeConstant = 0.3;
+    analyser.fftSize = 1024;
+
+    jsNode = context.createScriptProcessor(2048, 1, 1);
+    jsNode.onaudioprocess = function() {
+        var array = new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteFrequencyData(array);
+        volumeBars.mono.style.height = Math.average(array) * 2 + "px";
+        //volumeBars.mono.innerHTML = Math.floor(Math.average(array));
+    }
+
+    source.connect(gainNode);
+    source.connect(analyser);
+    source.connect(context.destination);
     jsNode.connect(context.destination);
     analyser.connect(jsNode);
 }
