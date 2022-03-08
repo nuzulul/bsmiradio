@@ -623,6 +623,15 @@ if (window.location.href.indexOf("localhost") > -1) {
           server = "";
 }
 
+function getplatform()
+{
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const platform = urlParams.get('platform');
+window.platform = platform;
+}
+getplatform();
+
 var socket = io(server);
 
 //console.log(socket);
@@ -1051,6 +1060,8 @@ function customchannel(data="")
 {
   if (currentfrequency == "60")
   {
+            if ((platform == "android") && (cordova.plugins.backgroundMode.isActive())) return;
+            
             let audioEl = document.getElementById("audio60");
             if (audioEl) { 
                 audioEl.srcObject = null
