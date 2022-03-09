@@ -780,10 +780,44 @@ function addPeer(socket_id, am_initiator) {
          createaudio(stream,socket_id);
     })
 
-    peers[socket_id].on('data', data => {
-         console.log('got a message from peer: ' +socket_id+" -> "+ data)
+
+    peers[socket_id].on('connect', () => {
+         onpeerconnect(socket_id);
     })
 
+    peers[socket_id].on('data', data => {
+         //console.log('got a message from peer: ' +socket_id+" -> "+ data)
+         onpeerdata(socket_id,data);
+    })
+
+}
+
+function onpeerconnect(socket_id)
+{
+  if (document.getElementsByClassName('paused').length === 0)
+  {
+    var myuser = username+","+kota+","+provinsi;
+    const msg = {
+      command: "availabilitystarted",
+      message: myuser
+    };
+    peers[socket_id].send(JSON.stringify(msg));
+  }
+}
+
+function onpeerdata(socket_id,data)
+{
+  var json = JSON.parse(data);
+  //console.log(json);
+  if (json.command == "availabilitystarted")
+  {
+            document.getElementById("iswtavailable").innerHTML = json.message;
+            let audioEl = document.getElementById(socket_id);
+            if (audioEl) playStream(audioEl.srcObject);
+            document.getElementsByClassName("left")[0].style.backgroundColor = "red";
+            document.getElementsByClassName("right")[0].style.backgroundColor = "red";
+            document.getElementById("pttblock").style.display = "block";
+  }
 }
 
 function createaudio(stream,socket_id)
