@@ -1691,7 +1691,7 @@ function cekuser()
 function onDeviceReady () {
       myusername();
       cekandroid();
-      document.getElementById("headsetbutton").style.display == "block"
+      document.getElementById("headsetbutton").style.display = "block";
 }
 
 function headsetmode()
@@ -1721,6 +1721,7 @@ function headsetmodestart()
 function headsetmodestop()
 {
   HeadsetButtons.stop();
+  pttup();
   stopbackgroundmode();
   startbackgroundmode();
   document.getElementById("headsetblock").style.display = "none";
