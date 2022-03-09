@@ -675,6 +675,7 @@ socket.on("disconnect", () => {
     document.getElementById("pttblock").style.display = "block";
     clearpeer();
     customchannel("disconnect");
+    if (document.getElementById("headsetblock").style.display == "block") headsetmode();
 });
 
 socket.on('user', function (usercount) {
