@@ -716,7 +716,8 @@ socket.on('availability', function (message,user,socket_id) {
           }
             document.getElementsByClassName("left")[0].style.backgroundColor = "red";
             document.getElementsByClassName("right")[0].style.backgroundColor = "red";
-            document.getElementById("pttblock").style.display = "block";               
+            document.getElementById("pttblock").style.display = "block"; 
+            window.ontalkid = socket_id;            
                   //const pttaudio = new Audio("ptt.mp3");
                   //pttaudio.play();
         } else {
@@ -724,6 +725,7 @@ socket.on('availability', function (message,user,socket_id) {
             document.getElementsByClassName("left")[0].style.backgroundColor = "white";
             document.getElementsByClassName("right")[0].style.backgroundColor = "white";
             document.getElementById("pttblock").style.display = "none";
+            window.ontalkid = ""; 
             if (live)
             {
                   const pttaudio = new Audio("ptt.mp3");
@@ -757,6 +759,7 @@ socket.on('initSend', socket_id => {
 socket.on('removePeer', socket_id => {
     console.log('removing peer ' + socket_id)
     removePeer(socket_id)
+    cekdisconnectid(socket_id);
 })
 
 socket.on('signal', data => {
@@ -818,6 +821,19 @@ function onpeerdata(socket_id,data)
             document.getElementsByClassName("left")[0].style.backgroundColor = "red";
             document.getElementsByClassName("right")[0].style.backgroundColor = "red";
             document.getElementById("pttblock").style.display = "block";
+            window.ontalkid = socket_id; 
+  }
+}
+
+function cekdisconnectid(socket_id)
+{
+  if (socket_id == window.ontalkid)
+  {
+            document.getElementById("iswtavailable").innerHTML = "Ready";
+            document.getElementsByClassName("left")[0].style.backgroundColor = "white";
+            document.getElementsByClassName("right")[0].style.backgroundColor = "white";
+            document.getElementById("pttblock").style.display = "none";
+            window.ontalkid = ""; 
   }
 }
 
