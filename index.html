@@ -1674,10 +1674,62 @@ function cekuser()
 function onDeviceReady () {
       myusername();
       cekandroid();
+      detectmusic();
 }
 
+function detectmusic()
+{
+  MusicControls.subscribe(musicevents);
+  MusicControls.listen();
+}
 
+function musicevents(action) {
 
+  const message = JSON.parse(action).message;console.log(message);
+	switch(message) {
+		case 'music-controls-next':
+			// Do something
+			break;
+		case 'music-controls-previous':
+			// Do something
+			break;
+		case 'music-controls-pause':
+			// Do something
+			break;
+		case 'music-controls-play':
+			// Do something
+			break;
+		case 'music-controls-destroy':
+			// Do something
+			break;
+    	case 'music-controls-toggle-play-pause' :
+			// Do something
+			break;
+		// Lockscreen seek controls (iOS only)
+    	case 'music-controls-seek-to':
+			const seekToInSeconds = JSON.parse(action).position;
+			MusicControls.updateElapsed({
+				elapsed: seekToInSeconds,
+				isPlaying: true
+			});
+			// Do something
+			break;
+
+		// Headset events (Android only)
+		// All media button events are listed below
+		case 'music-controls-media-button' :
+			// Do something
+			break;
+		case 'music-controls-headset-unplugged':
+			// Do something
+			break;
+		case 'music-controls-headset-plugged':
+			// Do something
+			break;
+		default:
+			break;
+	}
+}
 
 
 var volumeBars = {
