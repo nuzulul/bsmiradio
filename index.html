@@ -1143,6 +1143,8 @@ function customchannel(data="")
                 playStreamUrl(audioElement,"audio60");
             });
             
+            document.getElementById("headsetbutton").disabled = true;
+            
   }
   else if (pastfrequency == "60")
   {
@@ -1164,7 +1166,8 @@ function customchannel(data="")
               collection[i].srcObject = null;
               collection[i].src = "";
               collection[i].parentNode.removeChild(collection[i]);
-            }      
+            }
+            document.getElementById("headsetbutton").disabled = false;      
   }
 }
 
