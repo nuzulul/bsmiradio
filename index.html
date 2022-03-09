@@ -1757,10 +1757,12 @@ function headsetmodestart()
 
 function headsetmodestop()
 {
-  if (document.getElementById("pttblock").style.display == "block") return;
+  //if (document.getElementById("pttblock").style.display == "block") return;
+  document.getElementById("delayblock").style.display = "block"
   HeadsetButtons.stop(); 
   setTimeout(function () {
     pttup();
+    document.getElementById("delayblock").style.display = "none"
     document.getElementById("headsetblock").style.display = "none";
   }, 1000);
 }
