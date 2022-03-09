@@ -430,6 +430,7 @@ if (istorage.getItem("randomfrequency")===null) {
 
 
 function changefrequency(frequencya){
+  if (document.getElementById("headsetblock").style.display == "block"){showinfo("Headset Mode");return;}
 	var istorage = window.localStorage;
 	pastfrequency = currentfrequency;
 	istorage.setItem("currentfrequency",frequencya);
@@ -1753,6 +1754,7 @@ function headsetmodestart()
 
 function headsetmodestop()
 {
+  if (document.getElementById("pttblock").style.display == "block") return;
   HeadsetButtons.stop(); 
   setTimeout(function () {
     pttup();
