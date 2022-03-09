@@ -686,7 +686,7 @@ socket.on('roomData', function (data) {
   //console.log('roomdata : '+data);
   $('.userjoin').text(data.users.length);
   window.roomdata=data;
-  if (currentfrequency != "60") $('#iswtavailable').text("Ready");
+  //if (currentfrequency != "60") $('#iswtavailable').text("Ready");
 });
 
 socket.on('scanrf', function (data) {
@@ -1103,7 +1103,7 @@ function joinfrequency(key="")
             {
               document.getElementById("delayblock").style.display = "none";
             }
-                      
+            $('.userjoin').text("Ready");          
           }
         });
 }
