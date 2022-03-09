@@ -1640,7 +1640,7 @@ function startbackgroundmode(){
 					cordova.plugins.backgroundMode.enable();				
           cordova.plugins.backgroundMode.on('activate', function() {
              cordova.plugins.backgroundMode.disableWebViewOptimizations(); 
-              //cordova.plugins.backgroundMode.unlock();
+             if (document.getElementById("headsetblock").style.display == "block") cordova.plugins.backgroundMode.unlock();
               //cordova.plugins.backgroundMode.excludeFromTaskList();
           });
           //cordova.plugins.backgroundMode.overrideBackButton();
@@ -1715,16 +1715,13 @@ function headsetmodestart()
     toggleptt();
   }
   HeadsetButtons.start();
-  cordova.plugins.backgroundMode.unlock();
 }
 
 function headsetmodestop()
 {
-  HeadsetButtons.stop();
-  stopbackgroundmode();  
+  HeadsetButtons.stop(); 
   setTimeout(function () {
     pttup();
-    startbackgroundmode();
     document.getElementById("headsetblock").style.display = "none";
   }, 1000);
 }
