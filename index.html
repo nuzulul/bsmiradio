@@ -668,7 +668,7 @@ socket.on("connect", () => {
 socket.on("disconnect", () => {
     $('.usercount').text("-");
     $('.userjoin').text("-");window.roomdata="";
-    $('#iswtavailable').text("Reconnecting...");
+    $('#iswtavailable').text("Reconnect...");
     console.log('socket : disconnected');
     //$('#warning').text("Koneksi terputus");
     //document.getElementById("overlay").style.display = "block"; 
@@ -686,7 +686,6 @@ socket.on('roomData', function (data) {
   //console.log('roomdata : '+data);
   $('.userjoin').text(data.users.length);
   window.roomdata=data;
-  //if (currentfrequency != "60") $('#iswtavailable').text("Ready");
 });
 
 socket.on('scanrf', function (data) {
@@ -1056,6 +1055,7 @@ function joinfrequency(key="")
         var room = currentfrequency;
         
         $('.userjoin').text("-");window.roomdata="";
+        $('#iswtavailable').text("Join...");
         
         customchannel();
         
@@ -1096,7 +1096,7 @@ function joinfrequency(key="")
               var rf = currentfrequency;
               clearpeer();
               setTimeout(function () {
-                if (currentfrequency != "60") createpeer(rf);
+                if (currentfrequency != "13") createpeer(rf);
               },2000);
             }
             else
@@ -1110,19 +1110,19 @@ function joinfrequency(key="")
 
 function customchannel(data="")
 {
-  if (currentfrequency == "60")
+  if (currentfrequency == "13")
   {
             //if ((platform == "android") && (cordova.plugins.backgroundMode.isActive())) return;
             
-            let audioEl = document.getElementById("audio60");
+            let audioEl = document.getElementById("audio13");
             while (audioEl) { 
                 audioEl.srcObject = null;
                 audioEl.src = "";
                 audioEl.parentNode.removeChild(audioEl);
-                if (!document.getElementById("audio60")) break;
+                if (!document.getElementById("audio13")) break;
             }
             
-            const collection = document.getElementsByClassName("aud60");
+            const collection = document.getElementsByClassName("aud13");
             for (let i = 0; i < collection.length; i++) {
               collection[i].srcObject = null;
               collection[i].src = "";
@@ -1139,7 +1139,7 @@ function customchannel(data="")
             if (power == "POWER OFF") return;
 
             setTimeout(function () {
-              if (currentfrequency == "60") {
+              if (currentfrequency == "13") {
                 document.getElementById("iswtavailable").innerHTML = "Murottal";
                 document.getElementsByClassName("left")[0].style.backgroundColor = "red";
                 document.getElementsByClassName("right")[0].style.backgroundColor = "red";
@@ -1149,36 +1149,36 @@ function customchannel(data="")
             
             let newAud = document.createElement('audio');
             newAud.src = "https://qurango.net/radio/mix";
-            newAud.id = "audio60"
+            newAud.id = "audio13"
             newAud.playsinline = false;
             newAud.autoplay = true;
-            newAud.className = "aud60";
+            newAud.className = "aud13";
             newAud.crossOrigin = 'anonymous';
             audios.appendChild(newAud);
-            var audioElement = document.getElementById("audio60");
+            var audioElement = document.getElementById("audio13");
             audioElement.addEventListener("canplay", function() {
-                playStreamUrl(audioElement,"audio60");
+                playStreamUrl(audioElement,"audio13");
             });
             
             document.getElementById("headsetbutton").disabled = true;
             
   }
-  else if (pastfrequency == "60")
+  else if (pastfrequency == "13")
   {
             if (socket.connected) document.getElementById("iswtavailable").innerHTML = "Ready";
             document.getElementsByClassName("left")[0].style.backgroundColor = "white";
             document.getElementsByClassName("right")[0].style.backgroundColor = "white";
             if (socket.connected) document.getElementById("pttblock").style.display = "none";
             
-            let audioEl = document.getElementById("audio60");
+            let audioEl = document.getElementById("audio13");
             while (audioEl) { 
                 audioEl.srcObject = null;
                 audioEl.src = "";
                 audioEl.parentNode.removeChild(audioEl);
-                if (!document.getElementById("audio60")) break;
+                if (!document.getElementById("audio13")) break;
             }
             
-            const collection = document.getElementsByClassName("aud60");
+            const collection = document.getElementsByClassName("aud13");
             for (let i = 0; i < collection.length; i++) {
               collection[i].srcObject = null;
               collection[i].src = "";
@@ -1192,6 +1192,7 @@ var mychannels = [
 {rf:"10", nama:"HOME", info:"BANTUAN DAN DUKUNGAN"},
 {rf:"11", nama:"NASIONAL", info:"NASIONAL"},
 {rf:"12", nama:"TANGGAP BENCANA", info:"TANGGAP BENCANA"},
+{rf:"13", nama:"BSMI RADIO FM", info:"BSMI RADIO FM"},
 {rf:"15", nama:"RELAWAN", info:"RELAWAN", key:"1515"},
 {rf:"20", nama:"JAWA TIMUR", info:"JAWA TIMUR"},
 {rf:"21", nama:"JAKARTA", info:"JAKARTA"},
@@ -1227,7 +1228,6 @@ var mychannels = [
 {rf:"51", nama:"MALUKU UTARA", info:"MALUKU UTARA"},
 {rf:"52", nama:"PAPUA", info:"PAPUA"},
 {rf:"53", nama:"PAPUA BARAT", info:"PAPUA BARAT"},
-{rf:"60", nama:"BSMI RADIO FM", info:"BSMI RADIO FM"},
 {rf:"99", nama:"EXPERIMENT", info:"EXPERIMENT", key:"998877"},
 ];
 
@@ -1293,7 +1293,7 @@ function powerbutton()
   {
     $('#power').text('POWER ON');
     $('#power').css("background","green");
-    $('#iswtavailable').text("Reconnecting...");
+    $('#iswtavailable').text("Reconnect...");
     signalon();
     socket.connect();
     startbackgroundmode();
