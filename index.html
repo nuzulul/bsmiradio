@@ -1063,10 +1063,18 @@ function customchannel(data="")
             //if ((platform == "android") && (cordova.plugins.backgroundMode.isActive())) return;
             
             let audioEl = document.getElementById("audio60");
-            if (audioEl) { 
-                audioEl.srcObject = null
-                audioEl.src = ""
-                audioEl.parentNode.removeChild(audioEl)
+            while (audioEl) { 
+                audioEl.srcObject = null;
+                audioEl.src = "";
+                audioEl.parentNode.removeChild(audioEl);
+                if (!document.getElementById("audio60")) break;
+            }
+            
+            const collection = document.getElementsByClassName("aud60");
+            for (let i = 0; i < collection.length; i++) {
+              collection[i].srcObject = null;
+              collection[i].src = "";
+              collection[i].parentNode.removeChild(collection[i]);
             }   
 
             if (data == "disconnect") {
@@ -1081,25 +1089,25 @@ function customchannel(data="")
             setTimeout(function () {
               if (currentfrequency == "60") {
                 document.getElementById("iswtavailable").innerHTML = "Murottal";
+                document.getElementsByClassName("left")[0].style.backgroundColor = "red";
+                document.getElementsByClassName("right")[0].style.backgroundColor = "red";
+                document.getElementById("pttblock").style.display = "block";
               }
             },3000);
             
-            document.getElementsByClassName("left")[0].style.backgroundColor = "red";
-            document.getElementsByClassName("right")[0].style.backgroundColor = "red";
-            document.getElementById("pttblock").style.display = "block";
             let newAud = document.createElement('audio');
             newAud.src = "https://qurango.net/radio/mix";
-            newAud.id = "audio60";
+            newAud.id = "audio60"
             newAud.playsinline = false;
             newAud.autoplay = true;
-            newAud.className = "aud";
+            newAud.className = "aud60";
             newAud.crossOrigin = 'anonymous';
             audios.appendChild(newAud);
             var audioElement = document.getElementById("audio60");
-            //playStreamUrl(document.getElementById("audio60"),"audio60");
             audioElement.addEventListener("canplay", function() {
                 playStreamUrl(audioElement,"audio60");
             });
+            
   }
   else if (pastfrequency == "60")
   {
@@ -1107,12 +1115,21 @@ function customchannel(data="")
             document.getElementsByClassName("left")[0].style.backgroundColor = "white";
             document.getElementsByClassName("right")[0].style.backgroundColor = "white";
             if (socket.connected) document.getElementById("pttblock").style.display = "none";
+            
             let audioEl = document.getElementById("audio60");
-            if (audioEl) { 
-                audioEl.srcObject = null
-                audioEl.src = ""
-                audioEl.parentNode.removeChild(audioEl)
-            }    
+            while (audioEl) { 
+                audioEl.srcObject = null;
+                audioEl.src = "";
+                audioEl.parentNode.removeChild(audioEl);
+                if (!document.getElementById("audio60")) break;
+            }
+            
+            const collection = document.getElementsByClassName("aud60");
+            for (let i = 0; i < collection.length; i++) {
+              collection[i].srcObject = null;
+              collection[i].src = "";
+              collection[i].parentNode.removeChild(collection[i]);
+            }      
   }
 }
 
