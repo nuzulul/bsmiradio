@@ -790,7 +790,7 @@ function addPeer(socket_id, am_initiator) {
     })
 
     peers[socket_id].on('data', data => {
-         //console.log('got a message from peer: ' +socket_id+" -> "+ data)
+         console.log('got a message from peer: ' +socket_id+" -> "+ data)
          onpeerdata(socket_id,data);
     })
 
@@ -811,18 +811,20 @@ function onpeerconnect(socket_id)
 
 function onpeerdata(socket_id,data)
 {
-  var json = JSON.parse(data);
-  //console.log(json);
-  if (json.command == "availabilitystarted")
-  {
-            document.getElementById("iswtavailable").innerHTML = json.message;
-            let audioEl = document.getElementById(socket_id);
-            if (audioEl) playStream(audioEl.srcObject);
-            document.getElementsByClassName("left")[0].style.backgroundColor = "red";
-            document.getElementsByClassName("right")[0].style.backgroundColor = "red";
-            document.getElementById("pttblock").style.display = "block";
-            window.ontalkid = socket_id; 
-  }
+  try {
+        var json = JSON.parse(data);
+
+        if (json.command == "availabilitystarted")
+        {
+                  document.getElementById("iswtavailable").innerHTML = json.message;
+                  let audioEl = document.getElementById(socket_id);
+                  if (audioEl) playStream(audioEl.srcObject);
+                  document.getElementsByClassName("left")[0].style.backgroundColor = "red";
+                  document.getElementsByClassName("right")[0].style.backgroundColor = "red";
+                  document.getElementById("pttblock").style.display = "block";
+                  window.ontalkid = socket_id; 
+        }
+  } catch (err) {}
 }
 
 function cekdisconnectid(socket_id)
