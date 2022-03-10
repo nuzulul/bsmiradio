@@ -9,6 +9,7 @@
  <script src="https://ngawur.netlify.app/ngawur/lib/socketio/socket.io.js"></script>
  <script src="https://ngawur.netlify.app/ngawur/lib/simplepeer/simplepeer.min.js"></script>
  <script src="https://ngawur.netlify.app/ngawur/lib/automerge/automerge.js"></script>
+ <script src="https://ngawur.netlify.app/ngawur/lib/jsxss/xss.js"></script>
  <title>BSMI RADIO</title>
 </head>
 <style>
@@ -416,15 +417,15 @@ var defaultfrequency = 10;
 
 
 
-if (istorage.getItem("randomfrequency")===null) {
+if (istorage.getItem("currentfrequency")===null) {
   firstfrequency = randomnumbergenerator(10,99);
-  istorage.setItem("randomfrequency",firstfrequency);
+  //istorage.setItem("randomfrequency",firstfrequency);
   istorage.setItem("currentfrequency",defaultfrequency);
   //rfrequency=firstfrequency;
-  currentfrequency = istorage.getItem("currentfrequency");
+  currentfrequency = filterXSS(istorage.getItem("currentfrequency"),{whiteList:[],stripIgnoreTag:true,stripIgnoreTagBody: ['script']});
 } else {
   //rfrequency = istorage.getItem("randomfrequency");
-  currentfrequency = istorage.getItem("currentfrequency");
+  currentfrequency = filterXSS(istorage.getItem("currentfrequency"),{whiteList:[],stripIgnoreTag:true,stripIgnoreTagBody: ['script']});
   
 }
 
@@ -434,7 +435,7 @@ function changefrequency(frequencya){
 	var istorage = window.localStorage;
 	pastfrequency = currentfrequency;
 	istorage.setItem("currentfrequency",frequencya);
-	currentfrequency=istorage.getItem("currentfrequency");
+	currentfrequency=filterXSS(istorage.getItem("currentfrequency"),{whiteList:[],stripIgnoreTag:true,stripIgnoreTagBody: ['script']});
 	lcdfrequency(currentfrequency);
 };
 
@@ -450,7 +451,7 @@ function frequencybutton(){
 }
 
 function myfrequency(){
-	rfrequency = istorage.getItem("randomfrequency");
+	rfrequency = filterXSS(istorage.getItem("randomfrequency"),{whiteList:[],stripIgnoreTag:true,stripIgnoreTagBody: ['script']});
 	changefrequency(rfrequency);
 }
 
@@ -1555,9 +1556,9 @@ function myusername(force = false)
     }
     else
     {
-      window.username = istorage.getItem("username");
-      window.provinsi = istorage.getItem("provinsi");
-      window.kota = istorage.getItem("kota");
+      window.username = filterXSS(istorage.getItem("username"),{whiteList:[],stripIgnoreTag:true,stripIgnoreTagBody: ['script']});
+      window.provinsi = filterXSS(istorage.getItem("provinsi"),{whiteList:[],stripIgnoreTag:true,stripIgnoreTagBody: ['script']});
+      window.kota = filterXSS(istorage.getItem("kota"),{whiteList:[],stripIgnoreTag:true,stripIgnoreTagBody: ['script']});
       changefrequency(currentfrequency);
     }
 }
