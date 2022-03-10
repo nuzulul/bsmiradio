@@ -501,7 +501,7 @@ function resetfrequency()
 </div>
 </div>
 <div id="rfslider" class="overlay" style="display:none;"><center><div style="width:400px;"><div id="myrfslider"></div></div><button onclick="rfsliderok();" class="button" style="width: 200px; height: 40px margin: 0 auto; border-radius: 4px;">OK</button></center></div>
-<div id="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center><p id="warning">Untuk berbagi modulasi dibutuhkan akses mikrofon, kamera dan penyimpanan. Dengan klik masuk anda menyetujui persyaratan dan ketentuan layanan. </br></br><button onclick="" class="button" style="width: 50%; height: 40px margin: 0 auto; border-radius: 4px;">MASUK</button></p></center></div></div>
+<div id="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center><p style="padding:20px 20px;" id="warning">Loading...</br></br><button onclick="" class="button" style="width: 50%; height: 40px margin: 0 auto; border-radius: 4px;">MASUK</button></p></center></div></div>
 <div id="loader" class="loading">Loading&#8230;</div>
 <div id="audios" style="display:none;"></div>
 <script>
@@ -1720,7 +1720,7 @@ function cekuser()
 {
   if (istorage.getItem("username")===null)
   {
-      
+      $("#warning").text("Dibutuhkan akses mikrofon, kamera dan penyimpanan. Klik untuk menyetujui persyaratan dan ketentuan layanan.");
   }
   else
   {
