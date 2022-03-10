@@ -1159,9 +1159,12 @@ function customchannel(data="")
             newAud.crossOrigin = 'anonymous';
             audios.appendChild(newAud);
             var audioElement = document.getElementById("audio13");
-            audioElement.addEventListener("canplay", function() {
-                playStreamUrl(audioElement,"audio13");
-            });
+            function mylisten()
+            {
+              playStreamUrl(audioElement,"audio13");
+              audioElement.removeEventListener("canplay", mylisten);
+            }            
+            audioElement.addEventListener("canplay", mylisten);
             
             document.getElementById("headsetbutton").disabled = true;
             
