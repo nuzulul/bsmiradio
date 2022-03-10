@@ -1723,7 +1723,14 @@ function cekuser()
 {
   if (istorage.getItem("username")===null)
   {
-      $("#warning").text("Dibutuhkan akses mikrofon, kamera dan penyimpanan. Klik untuk menyetujui persyaratan dan ketentuan layanan.");
+      if (platform == null)
+      {
+        $("#warning").text("Dibutuhkan akses mikrofon. Klik untuk menyetujui persyaratan dan ketentuan layanan.");
+      }
+      else if (platform == "android")
+      {
+        $("#warning").text("Dibutuhkan akses mikrofon, kamera dan penyimpanan. Klik untuk menyetujui persyaratan dan ketentuan layanan.");
+      }
   }
   else
   {
