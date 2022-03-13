@@ -626,6 +626,19 @@ if (window.location.href.indexOf("localhost") > -1) {
           server = "";
 }
 
+function detectOS() {
+    const platform = navigator.platform.toLowerCase(),
+        iosPlatforms = ['iphone', 'ipad', 'ipod', 'ipod touch'];
+
+    if (platform.includes('mac')) return 'MacOS';
+    if (iosPlatforms.includes(platform)) return 'iOS';
+    if (platform.includes('win')) return 'Windows';
+    if (/android/.test(navigator.userAgent.toLowerCase())) return 'Android';
+    if (/linux/.test(platform)) return 'Linux';
+
+    return 'unknown';
+}
+
 function getplatform()
 {
 const queryString = window.location.search;
@@ -634,6 +647,19 @@ const platform = urlParams.get('platform');
 window.platform = platform;
 }
 getplatform();
+
+if ((!islocaldevelopment) && (platform !== "android"))
+{
+  var os = detectOS();
+  if (os == "Android")
+  {
+    window.location.replace("https://play.google.com/store/apps/details?id=app.netlify.bsmiradio");
+  }
+  else
+  {
+    window.location.replace("https://play.google.com/store/apps/details?id=app.netlify.bsmiradio");
+  }
+}
 
 var socket = io(server);
 
