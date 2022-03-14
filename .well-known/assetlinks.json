@@ -1,5 +1,11 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target" : { "namespace": "android_app", "package_name": "app.netlify.bsmiradio",
-               "sha256_cert_fingerprints": ["63:82:BB:1B:A2:FB:4F:57:89:FB:F6:2A:C4:10:89:F6:7A:64:79:9D:9A:6F:55:44:5E:52:F4:A4:DD:3B:D4:C7"] }
-}]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.netlify.bsmiradio",
+      "sha256_cert_fingerprints":
+        ["A8:81:14:CD:6C:71:DB:5D:E2:98:16:B1:3A:B0:79:C8:91:BD:DB:8E:8E:13:CE:55:AB:F2:3E:E2:99:4C:1D:DE"]
+    }
+  }
+]
