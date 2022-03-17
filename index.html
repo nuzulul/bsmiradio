@@ -10,6 +10,30 @@
  <script src="https://ngawur.netlify.app/ngawur/lib/simplepeer/simplepeer.min.js"></script>
  <script src="https://ngawur.netlify.app/ngawur/lib/automerge/automerge.js"></script>
  <script src="https://ngawur.netlify.app/ngawur/lib/jsxss/xss.js"></script>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4C3FP84HQR"></script>
+  <script>
+      if (window.location.href.indexOf("localhost") > -1) {
+                console.log('local development:localhost');
+                var islocaldevelopment = true;
+            }
+            else
+            {
+              if (window.location.href.indexOf("127.0.0.1") > -1) {console.log('local development:127.0.0.1');} 
+              else 
+              {
+                var islocaldevelopment = false;
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+
+                gtag('config', 'G-4C3FP84HQR');
+              }
+            }
+            
+
+  </script>
+
  <title>BSMIRADIO Walkie Talkie Klasik</title>
 </head>
 <style>
