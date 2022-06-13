@@ -1639,15 +1639,17 @@ function joinlist()
           datalist += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16"> <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/> </svg> '+data[i].name+'</br>';
       }
       
-      var invite = '<strong>Invite Link :</strong> </br><div style="margin:5px 5px;" >https://bsmiradio.netlify.app/?channel='+currentfrequency+'</div></br><button onclick="" class="button joinlistcopy" style="width: 100px; margin: 0 auto; border-radius: 4px;">COPY</button><button onclick="" class="button joinlistshare" style="width: 100px; margin: 0 auto; border-radius: 4px;">SHARE</button>';
+      var invite = '<strong>Invite Link :</strong> </br><div id="copytext" style="margin:5px 5px;" >https://bsmiradio.netlify.app/?channel='+currentfrequency+'</div></br><button onclick="" class="button joinlistcopy" style="width: 100px; margin: 0 auto; border-radius: 4px;">COPY</button><button onclick="" class="button joinlistshare" style="width: 100px; margin: 0 auto; border-radius: 4px;">SHARE</button>';
       
       $('body').append('<div id="joinlist" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);" id="joinlistcontent"><center><div class="joinlistclose" style="position:sticky;top:0px;right:0px!important;z-index:99999999;width:90%;text-align: right;margin-right:20px;"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16"> <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/> </svg></div>'+datalist+'</br>'+invite+'<button id="joinlistclose" onclick="" class="button joinlistclose" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;display:none;">TUTUP</button></center></div></div>');
       $(".joinlistclose").click(function(){
             $('#joinlist').remove();
       }); 
       $(".joinlistcopy").click(function(){
-        var url = 'https://bsmiradio.netlify.app/?channel='+currentfrequency;
-            navigator.clipboard.writeText(url);
+        var copyText = document.getElementById("copytext");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        navigator.clipboard.writeText(copyText.value);
       }); 
       $(".joinlistshare").click(function(){
         var url = 'https://api.whatsapp.com/send?text=https://bsmiradio.netlify.app/?channel='+currentfrequency;
