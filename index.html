@@ -1819,6 +1819,16 @@ function cekuser()
 function mydeeplinkurl(url)
 {
   console.log('deeplink : '+url);
+  const urlParams = new URLSearchParams(url);
+  const channel = urlParams.get('channel');
+  const frequency = parseInt(channel);
+  if (isNaN(frequency) || frequency < 10 || frequency > 99)
+  {
+  }
+  else
+  {
+    changefrequency(frequency);
+  }
 }
 
 function onDeviceReady () {
