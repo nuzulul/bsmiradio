@@ -1591,11 +1591,11 @@ function myusername(force = false)
 {
     if (istorage.getItem("username")===null || force) {
          
-         $('body').append('<div id="formusername" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center><form id="formmyusername">NAMA <input id="username" autocapitalize="none" type="text" name="username" placeholder="Huruf/Angka" pattern="[a-zA-Z0-9]{3,50}" required validate/></br></br>PROVINSI <input id="provinsi" autocapitalize="none" type="text" name="provinsi" placeholder="Huruf/Angka" pattern="[a-zA-Z0-9]{3,50}" required validate/></br></br>KOTA <input id="kota" autocapitalize="none" type="text" name="kota" placeholder="Huruf/Angka" pattern="[a-zA-Z0-9]{3,50}" required validate/></form></br></br><button id="submitusername" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">SAVE</button><button id="submitusernamecancel" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">CANCEL</button></center></div></div>');
+         $('body').append('<div id="formusername" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center><form id="formmyusername">Name <input id="username" autocapitalize="none" type="text" name="username" placeholder="letters or numbers" pattern="[a-zA-Z0-9]{3,50}" required validate/></br></br>Province <input id="provinsi" autocapitalize="none" type="text" name="provinsi" placeholder="letters or numbers" pattern="[a-zA-Z0-9]{3,50}" required validate/></br></br>City <input id="kota" autocapitalize="none" type="text" name="kota" placeholder="letters or numbers" pattern="[a-zA-Z0-9]{3,50}" required validate/></form></br></br><button id="submitusername" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">SAVE</button><button id="submitusernamecancel" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">CANCEL</button></center></div></div>');
          $("#submitusername").click(function(){
             if (!$('#formmyusername')[0].checkValidity()) {
               console.log('invalid');
-              showinfo("Pastikan benar dan tanpa spasi!");
+              showinfo("Make sure it is correct and without spaces!");
               return;
             }
             var username = $('#username').val();
@@ -1661,7 +1661,7 @@ function joinlist()
 
 function showinfo(data)
 {
-      $('body').append('<div id="showinfo" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center>'+data+'</br></br><button id="showinfoclose" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">TUTUP</button></center></div></div>');
+      $('body').append('<div id="showinfo" class="overlay" onclick=""><div style="width:100%;max-height:90%;background:white;padding:20px;overflow:scroll;word-wrap: break-word;position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"><center>'+data+'</br></br><button id="showinfoclose" onclick="" class="button" style="width: 100px; height: 40px margin: 0 auto; border-radius: 4px;">CLOSE</button></center></div></div>');
       $("#showinfoclose").click(function(){
             $('#showinfo').remove();
       }); 
