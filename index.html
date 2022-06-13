@@ -1816,9 +1816,15 @@ function cekuser()
   }
 }
 
+function mydeeplinkurl(url)
+{
+  console.log('deeplink : '+url);
+}
+
 function onDeviceReady () {
       myusername();
       cekandroid();
+      IonicDeeplink.route({ '/product/:productId': { target: 'product', parent: 'products' } }, function(match) {}, function(nomatch) { mydeeplinkurl(nomatch.$link.url); });
       document.getElementById("headsetbutton").style.display = "block";
 }
 
