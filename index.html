@@ -1809,7 +1809,7 @@ function cekuser()
 
           setTimeout(function () {
               myusername();
-              cekandroid();       
+              cekandroid();      
           }, 2000); 
 
       }
@@ -1819,14 +1819,17 @@ function cekuser()
 function mydeeplinkurl(url)
 {
   console.log('deeplink : '+url);
-  const urlParams = new URLSearchParams(url);
+  let myurl= new URL(url);
+  const urlParams = new URLSearchParams(myurl.search);
   const channel = urlParams.get('channel');
-  const frequency = parseInt(channel);
+  const frequency = channel;
   if (isNaN(frequency) || frequency < 10 || frequency > 99)
   {
+    console.log(frequency);
   }
   else
   {
+    console.log(frequency);
     changefrequency(frequency);
   }
 }
