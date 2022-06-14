@@ -721,6 +721,9 @@ if (platform === "bsmijatimorg")
             istorage.setItem("username",username);
             istorage.setItem("provinsi",provinsi);
             istorage.setItem("kota",kota);
+            currentfrequency = 10;
+            alert('RADIOBSMI FM');
+            changefrequency(13);
 }
 
 var socket = io(server);
