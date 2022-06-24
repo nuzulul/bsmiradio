@@ -1165,7 +1165,7 @@ function joinfrequency(key="")
           var channelkey = mychannel.key;
           if (channelkey !== undefined)
           {
-              if (channelkey !== key)
+              if ((channelkey !== key) && (channelkey !== currentkey))
               {
                 cekchannelkey();
                 return;
@@ -1654,6 +1654,7 @@ function myusername(force = false)
       window.username = filterXSS(istorage.getItem("username"),{whiteList:[],stripIgnoreTag:true,stripIgnoreTagBody: ['script']});
       window.provinsi = filterXSS(istorage.getItem("provinsi"),{whiteList:[],stripIgnoreTag:true,stripIgnoreTagBody: ['script']});
       window.kota = filterXSS(istorage.getItem("kota"),{whiteList:[],stripIgnoreTag:true,stripIgnoreTagBody: ['script']});
+      window.currentkey = filterXSS(istorage.getItem("currentkey"),{whiteList:[],stripIgnoreTag:true,stripIgnoreTagBody: ['script']});
       changefrequency(currentfrequency);
     }
 }
@@ -1742,6 +1743,8 @@ function cekchannelkey()
               var key = $('#key').val();
               $('#formchannelkey').remove();
               joinfrequency(key);
+              istorage.setItem("currentkey",key);
+              window.currentkey = key;
           });
 }
 
