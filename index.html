@@ -1083,11 +1083,11 @@ function walkietalkie()
         var myuser = username+","+kota+","+provinsi;
         $('.play-button').on('mousedown touchstart', function (e) {
                 $(this).toggleClass("paused");
-                $('#iswtavailable').text("Broadcast ...");
+                if (!echotest) {$('#iswtavailable').text("Broadcast ...");} else {$('#iswtavailable').text("ECHO");}
                 document.getElementsByClassName("left")[0].style.backgroundColor = "red";
                 document.getElementsByClassName("right")[0].style.backgroundColor = "red"; 
                 //socket.emit('pttblock',"started",currentfrequency);
-                if (echotest) socket.emit('availability',"started",currentfrequency,myuser);
+                if (!echotest) socket.emit('availability',"started",currentfrequency,myuser);
                 mediaRecorder.start();
                 unmutestream();
                 playStream(stream);
@@ -1100,7 +1100,7 @@ function walkietalkie()
                 $('#iswtavailable').text("Ready");
                 document.getElementsByClassName("left")[0].style.backgroundColor = "white";
                 document.getElementsByClassName("right")[0].style.backgroundColor = "white";
-                if (echotest) socket.emit('availability',"stopped",currentfrequency);
+                if (!echotest) socket.emit('availability',"stopped",currentfrequency);
                 //socket.emit('pttblock',"stopped",currentfrequency);
                 document.getElementById("delayblock").style.display = "block";
                 $('#delayexpired').text('3');
