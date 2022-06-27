@@ -1083,7 +1083,7 @@ function walkietalkie()
         var myuser = username+","+kota+","+provinsi;
         $('.play-button').on('mousedown touchstart', function (e) {
                 $(this).toggleClass("paused");
-                if (!echotest) {$('#iswtavailable').text("Broadcast ...");} else {$('#iswtavailable').text("ECHO");}
+                if (!echotest) {$('#iswtavailable').text("Broadcast ...");} else {$('#iswtavailable').text("CHECK SOUND");}
                 document.getElementsByClassName("left")[0].style.backgroundColor = "red";
                 document.getElementsByClassName("right")[0].style.backgroundColor = "red"; 
                 //socket.emit('pttblock',"started",currentfrequency);
