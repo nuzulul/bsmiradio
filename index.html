@@ -1089,7 +1089,7 @@ function walkietalkie()
                 //socket.emit('pttblock',"started",currentfrequency);
                 if (!echotest) socket.emit('availability',"started",currentfrequency,myuser);
                 mediaRecorder.start();
-                if (!echotest) unmutestream();
+                unmutestream();
                 playStream(stream);
 
         }).bind('mouseup mouseleave touchend', function () {
