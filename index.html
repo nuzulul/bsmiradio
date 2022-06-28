@@ -2027,7 +2027,7 @@ function playStream(stream) {
 
     source.connect(gainNode);
     source.connect(analyser);
-    if (echotest) source.connect(context.destination);
+    //source.connect(context.destination);
 
     var array = new Uint8Array(analyser.frequencyBinCount);
     function renderFrame() {
