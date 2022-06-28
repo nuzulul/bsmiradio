@@ -935,7 +935,7 @@ function cekdisconnectid(socket_id)
 
 function createaudio(stream,socket_id)
 {
-        if (checksound) return;
+        if (echotest) return;
         let newAud = document.createElement('audio')
         newAud.srcObject = stream
         newAud.id = socket_id
