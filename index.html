@@ -1090,7 +1090,7 @@ function walkietalkie()
                 if (!echotest) socket.emit('availability',"started",currentfrequency,myuser);
                 mediaRecorder.start();
                 unmutestream();
-                playStream(stream);
+                if (!echotest) {playStream(stream);} else {playStreamSound(stream);}
 
         }).bind('mouseup mouseleave touchend', function () {
             if (mediaRecorder.state !== 'inactive') {
@@ -2028,6 +2028,32 @@ function playStream(stream) {
     source.connect(gainNode);
     source.connect(analyser);
     //source.connect(context.destination);
+
+    var array = new Uint8Array(analyser.frequencyBinCount);
+    function renderFrame() {
+        requestAnimationFrame(renderFrame);
+        analyser.getByteFrequencyData(array);
+        volumeBars.mono.style.height = Math.average(array) * 2 + "px";      
+    }
+    renderFrame();
+}
+
+function playStreamSound(stream) {
+    context.close();
+    context	= new AudioContext();
+
+    var source = context.createMediaStreamSource(stream);
+    
+    var gainNode = context.createGain();
+    gainNode.gain.value = -1;
+
+    var analyser = context.createAnalyser();
+    analyser.smoothingTimeConstant = 0.3;
+    analyser.fftSize = 1024;
+
+    source.connect(gainNode);
+    source.connect(analyser);
+    source.connect(context.destination);
 
     var array = new Uint8Array(analyser.frequencyBinCount);
     function renderFrame() {
