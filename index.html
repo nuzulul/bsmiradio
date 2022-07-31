@@ -1193,7 +1193,7 @@ function joinfrequency(key="")
               var rf = currentfrequency;
               clearpeer();
               setTimeout(function () {
-                if (currentfrequency != "13") createpeer(rf);
+                if ((currentfrequency != "13")&&(currentfrequency != "93")) createpeer(rf);
               },2000);
             }
             else
