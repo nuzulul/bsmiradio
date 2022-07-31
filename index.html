@@ -1286,6 +1286,88 @@ function customchannel(data="")
             }
             document.getElementById("headsetbutton").disabled = false;      
   }
+
+
+  if (currentfrequency == "93")
+  {
+            
+            
+            let audioEl = document.getElementById("audio93");
+            while (audioEl) { 
+                audioEl.srcObject = null;
+                audioEl.src = "";
+                audioEl.parentNode.removeChild(audioEl);
+                if (!document.getElementById("audio93")) break;
+            }
+            
+            const collection = document.getElementsByClassName("aud93");
+            for (let i = 0; i < collection.length; i++) {
+              collection[i].srcObject = null;
+              collection[i].src = "";
+              collection[i].parentNode.removeChild(collection[i]);
+            }   
+
+            if (data == "disconnect") {
+              document.getElementsByClassName("left")[0].style.backgroundColor = "white";
+              document.getElementsByClassName("right")[0].style.backgroundColor = "white";
+              return;
+            }
+            
+            var power = $('#power').text();
+            if (power == "POWER OFF") return;
+
+            setTimeout(function () {
+              if (currentfrequency == "93") {
+                document.getElementById("iswtavailable").innerHTML = "LIVE";
+                document.getElementsByClassName("left")[0].style.backgroundColor = "red";
+                document.getElementsByClassName("right")[0].style.backgroundColor = "red";
+                document.getElementById("pttblock").style.display = "block";
+              }
+            },3000);
+            
+            let newAud = document.createElement('audio');
+            newAud.src = "https://pu.klikhost.com:8100/stream?1659244467833";
+            newAud.id = "audio93"
+            newAud.playsinline = false;
+            newAud.autoplay = true;
+            newAud.className = "aud93";
+            newAud.crossOrigin = 'anonymous';
+            audios.appendChild(newAud);
+            var audioElement = document.getElementById("audio93");
+            function mylisten()
+            {
+              playStreamUrl(audioElement,"audio93");
+              audioElement.removeEventListener("canplay", mylisten);
+            }            
+            audioElement.addEventListener("canplay", mylisten);
+            
+            document.getElementById("headsetbutton").disabled = true;
+            
+  }
+  else if (pastfrequency == "93")
+  {
+            if (socket.connected) document.getElementById("iswtavailable").innerHTML = "Ready";
+            document.getElementsByClassName("left")[0].style.backgroundColor = "white";
+            document.getElementsByClassName("right")[0].style.backgroundColor = "white";
+            if (socket.connected) document.getElementById("pttblock").style.display = "none";
+            
+            let audioEl = document.getElementById("audio93");
+            while (audioEl) { 
+                audioEl.srcObject = null;
+                audioEl.src = "";
+                audioEl.parentNode.removeChild(audioEl);
+                if (!document.getElementById("audio93")) break;
+            }
+            
+            const collection = document.getElementsByClassName("aud93");
+            for (let i = 0; i < collection.length; i++) {
+              collection[i].srcObject = null;
+              collection[i].src = "";
+              collection[i].parentNode.removeChild(collection[i]);
+            }
+            document.getElementById("headsetbutton").disabled = false;      
+  }
+
   
   if (currentfrequency == "10")
   {
@@ -1339,6 +1421,7 @@ var mychannels = [
 {rf:"51", nama:"MALUKU UTARA", info:"MALUKU UTARA"},
 {rf:"52", nama:"PAPUA", info:"PAPUA"},
 {rf:"53", nama:"PAPUA BARAT", info:"PAPUA BARAT"},*/
+{rf:"93", nama:"SUARAMUSLIM", info:"SUARAMUSLIM"},
 {rf:"99", nama:"MARKAS", info:"MARKAS", key:"998877"},
 ];
 
