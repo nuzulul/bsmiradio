@@ -1193,7 +1193,7 @@ function joinfrequency(key="")
               var rf = currentfrequency;
               clearpeer();
               setTimeout(function () {
-                if ((currentfrequency != "13")&&(currentfrequency != "93")) createpeer(rf);
+                if ((currentfrequency != "13")&&(currentfrequency != "20")&&(currentfrequency != "93")) createpeer(rf);
               },2000);
             }
             else
@@ -1279,6 +1279,87 @@ function customchannel(data="")
             }
             
             const collection = document.getElementsByClassName("aud13");
+            for (let i = 0; i < collection.length; i++) {
+              collection[i].srcObject = null;
+              collection[i].src = "";
+              collection[i].parentNode.removeChild(collection[i]);
+            }
+            document.getElementById("headsetbutton").disabled = false;      
+  }
+
+
+  if (currentfrequency == "20")
+  {
+            //if ((platform == "android") && (cordova.plugins.backgroundMode.isActive())) return;
+            
+            let audioEl = document.getElementById("audio20");
+            while (audioEl) { 
+                audioEl.srcObject = null;
+                audioEl.src = "";
+                audioEl.parentNode.removeChild(audioEl);
+                if (!document.getElementById("audio20")) break;
+            }
+            
+            const collection = document.getElementsByClassName("aud20");
+            for (let i = 0; i < collection.length; i++) {
+              collection[i].srcObject = null;
+              collection[i].src = "";
+              collection[i].parentNode.removeChild(collection[i]);
+            }   
+
+            if (data == "disconnect") {
+              document.getElementsByClassName("left")[0].style.backgroundColor = "white";
+              document.getElementsByClassName("right")[0].style.backgroundColor = "white";
+              return;
+            }
+            
+            var power = $('#power').text();
+            if (power == "POWER OFF") return;
+
+            setTimeout(function () {
+              if (currentfrequency == "20") {
+                document.getElementById("iswtavailable").innerHTML = "LIVE";
+                document.getElementsByClassName("left")[0].style.backgroundColor = "red";
+                document.getElementsByClassName("right")[0].style.backgroundColor = "red";
+                document.getElementById("pttblock").style.display = "block";
+              }
+            },3000);
+            
+            let newAud = document.createElement('audio');
+            newAud.src = "https://bsmifm.bsmiapp.repl.co/stream";
+            newAud.id = "audio20"
+            newAud.playsinline = false;
+            newAud.autoplay = true;
+            newAud.className = "aud20";
+            newAud.crossOrigin = 'anonymous';
+            audios.appendChild(newAud);
+            var audioElement = document.getElementById("audio20");
+            function mylisten()
+            {
+              playStreamUrl(audioElement,"audio20");
+              audioElement.removeEventListener("canplay", mylisten);
+            }            
+            audioElement.addEventListener("canplay", mylisten);
+            
+            document.getElementById("headsetbutton").disabled = true;
+            
+  }
+  else if (pastfrequency == "20")
+  {
+            if (socket.connected) document.getElementById("iswtavailable").innerHTML = "Ready";
+            document.getElementsByClassName("left")[0].style.backgroundColor = "white";
+            document.getElementsByClassName("right")[0].style.backgroundColor = "white";
+            if (socket.connected) document.getElementById("pttblock").style.display = "none";
+            
+            let audioEl = document.getElementById("audio20");
+            while (audioEl) { 
+                audioEl.srcObject = null;
+                audioEl.src = "";
+                audioEl.parentNode.removeChild(audioEl);
+                if (!document.getElementById("audio20")) break;
+            }
+            
+            const collection = document.getElementsByClassName("aud20");
             for (let i = 0; i < collection.length; i++) {
               collection[i].srcObject = null;
               collection[i].src = "";
@@ -1387,8 +1468,8 @@ var mychannels = [
 {rf:"13", nama:"MUROTTAL", info:"RADIOBSMI FM"},
 
 
-/*{rf:"20", nama:"JAWA TIMUR", info:"JAWA TIMUR"},
-{rf:"21", nama:"JAKARTA", info:"JAKARTA"},
+{rf:"20", nama:"BSMI FM", info:"BSMI FM"},
+/*{rf:"21", nama:"JAKARTA", info:"JAKARTA"},
 {rf:"22", nama:"BANTEN ", info:"BANTEN"},
 {rf:"23", nama:"JAWA BARAT", info:"JAWA BARAT"},
 {rf:"24", nama:"JAWA TENGAH", info:"JAWA TENGAH"},
