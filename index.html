@@ -1341,7 +1341,7 @@ function customchannel(data="")
             newAud.id = "audio20a"
             newAud.playsinline = false;
             newAud.autoplay = true;
-            newAud.volume = 0.01;
+            newAud.volume = 0.001;
             newAud.className = "aud20";
             newAud.crossOrigin = 'anonymous';
             audios.appendChild(newAud);
@@ -2289,7 +2289,7 @@ function playStreamUrlBSMIFM(audio) {
     function renderFrame() {
         requestAnimationFrame(renderFrame);
         analyser.getByteFrequencyData(array);
-        volumeBars.mono.style.height = Math.average(array) * 20 + "px";      
+        volumeBars.mono.style.height = Math.average(array) * 200 + "px";      
     }
     renderFrame();
 }
