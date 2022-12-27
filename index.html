@@ -1341,7 +1341,7 @@ function customchannel(data="")
             newAud.id = "audio20a"
             newAud.playsinline = false;
             newAud.autoplay = true;
-            newAud.volume = 0.1;
+            newAud.volume = 0.01;
             newAud.className = "aud20";
             newAud.crossOrigin = 'anonymous';
             audios.appendChild(newAud);
@@ -1349,7 +1349,7 @@ function customchannel(data="")
             var audioElement = document.getElementById("audio20a");
             function mylisten()
             {
-              playStreamUrl(audioElement,"audio20");
+              playStreamUrlBSMIFM(audioElement,"audio20");
               audioElement.removeEventListener("canplay", mylisten);
             }            
             audioElement.addEventListener("canplay", mylisten);
@@ -2264,6 +2264,32 @@ function playStreamUrl(audio) {
         requestAnimationFrame(renderFrame);
         analyser.getByteFrequencyData(array);
         volumeBars.mono.style.height = Math.average(array) * 2 + "px";      
+    }
+    renderFrame();
+}
+
+function playStreamUrlBSMIFM(audio) {
+    context.close();
+    context	= new AudioContext();
+
+    var source = context.createMediaElementSource(audio);
+    
+    var gainNode = context.createGain();
+    gainNode.gain.value = -1;
+
+    var analyser = context.createAnalyser();
+    analyser.smoothingTimeConstant = 0.3;
+    analyser.fftSize = 1024;
+
+    source.connect(gainNode);
+    source.connect(analyser);
+    source.connect(context.destination);
+
+    var array = new Uint8Array(analyser.frequencyBinCount);
+    function renderFrame() {
+        requestAnimationFrame(renderFrame);
+        analyser.getByteFrequencyData(array);
+        volumeBars.mono.style.height = Math.average(array) * 20 + "px";      
     }
     renderFrame();
 }
