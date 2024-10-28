@@ -1328,14 +1328,14 @@ function customchannel(data="")
             let newAud = document.createElement('audio');
             newAud.src = "https://stream.zeno.fm/2x8c8cnq2zhvv/" // "https://stream-52.zeno.fm/2x8c8cnq2zhvv?zs=_axZk_adQeSpyBZ5zDzvEg" // "https://stream.zeno.fm/2x8c8cnq2zhvv/" //"https://iwxmultran.us15.qoddiapp.com/" //"https://bsmifm.bsmiapp.repl.co/";
             newAud.id = "audio20"
-            //newAud.playsinline = false;
+            newAud.playsinline = false;
             newAud.autoplay = true;
             newAud.className = "aud20";
             //newAud.muted = true;
-            //newAud.crossOrigin = 'anonymous';
+            newAud.crossOrigin = 'anonymous';
             audios.appendChild(newAud);
 
-            newAud = document.createElement('audio');
+            /*newAud = document.createElement('audio');
             newAud.src = "https://bsmifm.bsmiapp.repl.co/";
             newAud.id = "audio20a"
             newAud.playsinline = false;
@@ -1343,9 +1343,9 @@ function customchannel(data="")
             newAud.volume = 0.001;
             newAud.className = "aud20";
             newAud.crossOrigin = 'anonymous';
-            audios.appendChild(newAud);
+            audios.appendChild(newAud);*/
 
-            var audioElement = document.getElementById("audio20a");
+            var audioElement = document.getElementById("audio20");
             function mylisten()
             {
               playStreamUrlBSMIFM(audioElement,"audio20");
@@ -1419,7 +1419,7 @@ function customchannel(data="")
             },3000);
             
             let newAud = document.createElement('audio');
-            newAud.src = "https://pu.klikhost.com:8100/stream?1659244467833";
+            newAud.src = "https://pu.klikhost.com/proxy/suaramuslim/stream?1730127597265";
             newAud.id = "audio93"
             newAud.playsinline = false;
             newAud.autoplay = true;
@@ -1475,12 +1475,12 @@ function customchannel(data="")
 
 var mychannels = [
 {rf:"10", nama:"ECHO/SOUND TEST", info:"MIC&SPEAKER TEST"},
-{rf:"11", nama:"RELAWAN", info:"NASIONAL"},
+{rf:"11", nama:"FREKUENSI BEBAS", info:"FREKUENSI BEBAS"},
 {rf:"12", nama:"TANGGAPBENCANA", info:"TANGGAP BENCANA", key:"1222"},
 {rf:"13", nama:"MUROTTAL", info:"RADIOBSMI FM"},
 
 
-{rf:"20", nama:"BSMIFM", info:"BSMIFM"},
+{rf:"20", nama:"BSMI FM", info:"BSMI FM"},
 /*{rf:"21", nama:"JAKARTA", info:"JAKARTA"},
 {rf:"22", nama:"BANTEN ", info:"BANTEN"},
 {rf:"23", nama:"JAWA BARAT", info:"JAWA BARAT"},
@@ -1513,8 +1513,8 @@ var mychannels = [
 {rf:"50", nama:"MALUKU", info:"MALUKU"},
 {rf:"51", nama:"MALUKU UTARA", info:"MALUKU UTARA"},
 {rf:"52", nama:"PAPUA", info:"PAPUA"},
-{rf:"53", nama:"PAPUA BARAT", info:"PAPUA BARAT"},
-{rf:"93", nama:"SUARAMUSLIM", info:"SUARAMUSLIM"},*/
+{rf:"53", nama:"PAPUA BARAT", info:"PAPUA BARAT"},*/
+{rf:"93", nama:"SUARAMUSLIM", info:"SUARAMUSLIM"},
 {rf:"99", nama:"MARKAS", info:"MARKAS", key:"998877"},
 ];
 
@@ -2299,7 +2299,7 @@ function playStreamUrlBSMIFM(audio) {
     function renderFrame() {
         requestAnimationFrame(renderFrame);
         analyser.getByteFrequencyData(array);
-        volumeBars.mono.style.height = Math.average(array) * 200 + "px";      
+        volumeBars.mono.style.height = Math.average(array) * 2 + "px";      
     }
     renderFrame();
 }
@@ -2440,8 +2440,8 @@ function aboutbutton()
 {
   var data = "<center>"
   +"<h3>ABOUT</h3>"
-  +"BSMIRADIO Walkie Talkie Klasik</br>Copyright [ &copy; ] 2022 BSMI Jawa Timur"
-  +"<br>Coded with ❤️ by <a href='https://nuzulul.github.io' target='_blank'>Nuzulul Zulkarnain</a>"
+  +"BSMIRADIO Walkie Talkie Klasik</br>Copyright [ &copy; ] 2022 BSMI JATIM"
+  +"<br>Built with ❤️ by <a href='https://nuzulul.github.io' target='_blank'>Nuzulul Zulkarnain</a>"
   +"</center>";
   showinfo(data);
 }
