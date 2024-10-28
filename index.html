@@ -616,7 +616,7 @@ var server2="https://bsmiradio.herokuapp.com";
 var server3="https://bhecoajivt.us15.qoddiapp.com";
 var server4="https://bsmiradio.glitch.me";
 var server = server4;
-var live = true;
+var live = false;
 let localStream = null;
 let peers = {}
 var echotest = false;
@@ -635,24 +635,6 @@ const configuration = {
       urls: 'turn:numb.viagenie.ca',
       credential: 'myturn33',
       username: 'hxuwb10o@anonaddy.me',
-    },
-    {
-      urls: "stun:openrelay.metered.ca:80"
-    },
-    {
-      urls: "turn:openrelay.metered.ca:80",
-      username: "openrelayproject",
-      credential: "openrelayproject"
-    },
-    {
-      urls: "turn:openrelay.metered.ca:443",
-      username: "openrelayproject",
-      credential: "openrelayproject"
-    },
-    {
-      urls: "turn:openrelay.metered.ca:443?transport=tcp",
-      username: "openrelayproject",
-      credential: "openrelayproject"
     }
   ]
 }
@@ -724,8 +706,15 @@ if (platform === "bsmijatimorg")
             istorage.setItem("username",username);
             istorage.setItem("provinsi",provinsi);
             istorage.setItem("kota",kota);
-            currentfrequency = 20;
-            
+            currentfrequency = 20;    
+}else if(istorage.getItem("username")===null){
+            var username = randomString(5);
+            var provinsi = 'user'
+            var kota = 'guest';
+            istorage.setItem("username",username);
+            istorage.setItem("provinsi",provinsi);
+            istorage.setItem("kota",kota);
+			currentfrequency = 10;
 }
 
 var socket = io(server);
@@ -1515,8 +1504,8 @@ var mychannels = [
 {rf:"50", nama:"MALUKU", info:"MALUKU"},
 {rf:"51", nama:"MALUKU UTARA", info:"MALUKU UTARA"},
 {rf:"52", nama:"PAPUA", info:"PAPUA"},
-{rf:"53", nama:"PAPUA BARAT", info:"PAPUA BARAT"},*/
-{rf:"93", nama:"SUARAMUSLIM", info:"SUARAMUSLIM"},
+{rf:"53", nama:"PAPUA BARAT", info:"PAPUA BARAT"},
+{rf:"93", nama:"SUARAMUSLIM", info:"SUARAMUSLIM"},*/
 {rf:"99", nama:"MARKAS", info:"MARKAS", key:"998877"},
 ];
 
