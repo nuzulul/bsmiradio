@@ -614,7 +614,8 @@ function readyapp()
 var server1="https://radio.bsmiapp.repl.co";
 var server2="https://bsmiradio.herokuapp.com";
 var server3="https://bhecoajivt.us15.qoddiapp.com";
-var server = server3;
+var server4="https://bsmiradio.glitch.me";
+var server = server4;
 var live = true;
 let localStream = null;
 let peers = {}
@@ -689,14 +690,14 @@ if ((!islocaldevelopment) && (platform !== "android") && (platform !== "bsmijati
   var os = detectOS();
   if (os == "Android")
   {
-    window.location.replace("https://play.google.com/store/apps/details?id=app.netlify.bsmiradio");
+    //window.location.replace("https://play.google.com/store/apps/details?id=app.netlify.bsmiradio");
   }
   else if ((os == "Windows") && (platform == "windows"))
   {
   }
   else
   {
-    window.location.replace("https://play.google.com/store/apps/details?id=app.netlify.bsmiradio");
+    //window.location.replace("https://play.google.com/store/apps/details?id=app.netlify.bsmiradio");
   }
 }
 
