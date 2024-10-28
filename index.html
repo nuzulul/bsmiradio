@@ -35,7 +35,7 @@
   </script>
 
  <title>BSMIRADIO Walkie Talkie Klasik</title>
-
+	<link rel="manifest" href="manifest.json" />
   <meta property="og:type" content="website">
   <meta property="og:title" content="Join Channel BSMIRADIO Walkie Talkie Klasik">
   <meta property="og:url" content="https://bsmiradio.netlify.app/">
@@ -2420,7 +2420,8 @@ function aboutbutton()
 {
   var data = "<center>"
   +"<h3>ABOUT</h3>"
-  +"BSMIRADIO Walkie Talkie Klasik</br>Copyright [ &copy; ] 2022 Humas BSMI Jawa Timur"
+  +"BSMIRADIO Walkie Talkie Klasik</br>Copyright [ &copy; ] 2022 BSMI Jawa Timur"
+  +"<br>Coded by <a href='https://nuzulul.github.io' target='_blank'>Nuzulul Zulkarnain</a>"
   +"</center>";
   showinfo(data);
 }
@@ -2486,6 +2487,13 @@ function myTimerImgBroken() {
 }
 
 });
+
+/////////sw.js///////////////////////////////////
+
+  if (typeof navigator.serviceWorker !== 'undefined') {
+    navigator.serviceWorker.register('sw.js')
+  }
+////////////////////////////////////////////////////
 </script>
   
 </body>

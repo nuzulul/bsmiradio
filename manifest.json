@@ -1,0 +1,70 @@
+{
+  "id": "BSMIRADIO",
+  "background_color": "#ffffff",
+  "description": "WALKIE TALKIE KLASIK",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "BSMIRADIO",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "BSMIRADIO",
+  "start_url": "/",
+  "theme_color": "#87D314",
+  "categories": [
+    "social"
+  ],
+  "screenshots": [],
+  "icons": [
+      {
+          "src": "/play_store_512.png",
+          "sizes": "512x512",
+          "type": "image/png",
+          "purpose": "any"
+      }
+  ],
+  "capture_links": "existing-client-navigate",
+  "url_handlers": [
+    {
+      "origin": "https://bsmiradio.netlify.app"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+bsmiradio",
+      "url": "/?bsmiradio=%s"
+    }
+  ],
+  "intent_filters": [
+    {
+      "scope_url_scheme": "https",
+      "scope_url_host": "bsmiradio.netlify.app",
+      "scope_url_path": "/"
+    }
+  ],
+  "related_applications": [{
+    "platform": "webapp",
+    "url": "https://bsmiradio.netlify.app/manifest.json"
+  }],
+  "lang": "id",
+  "launch_handler": {
+      "client_mode": ["navigate-existing", "auto"]
+  },  
+  "handle_links": "preferred",
+  "screenshots" : [
+    {
+      "src": "/screenshot.png",
+      "sizes": "1082x2400",
+      "type": "image/png",
+      "platform": "android",
+	  "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshot.png",
+      "sizes": "1082x2400",
+      "type": "image/png",
+      "platform": "android",
+	  "form_factor": "wide"
+    }	
+  ]
+
+}
